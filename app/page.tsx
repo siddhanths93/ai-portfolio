@@ -128,8 +128,7 @@ export default function Home() {
             <h3 className="text-3xl font-bold mb-4">About</h3>
 
             <p className="text-gray-400">
-              I am an AI engineer focused on building agentic systems, RAG pipelines,
-              and enterprise AI tools that solve real business problems.
+              I am an AI engineer focused on building agentic systems and enterprise AI tools that solve real business problems.
             </p>
 
           </motion.section>
