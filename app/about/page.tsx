@@ -28,12 +28,8 @@ export default function AboutPage() {
             <p>
               I am a Senior Manager at The Hackett Group, where I lead
               benchmarking and transformation engagements for Fortune 500
-              clients.
-            </p>
-
-            <p>
-              Previously, I worked at Procure Analytics building spend analysis
-              models and machine learning pipelines that identified millions in
+              clients. Previously, I worked at Procure Analytics building spend analysis
+              models and data ingestion pipelines that identified millions in
               savings opportunities.
             </p>
 
@@ -44,7 +40,7 @@ export default function AboutPage() {
             </p>
 
             <p>
-              I am currently pursuing a Master’s in Analytics with an AI focus
+              I am currently pursuing a Master’s in Analytics with an data science focus
               at Georgia Tech, exploring AI agents and intelligent automation
               for enterprise workflows.
             </p>

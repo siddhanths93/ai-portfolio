@@ -28,8 +28,8 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-8 text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
-            AI Engineer focused on agents, automation, RAG systems,
-            and enterprise analytics workflows.
+            Data-driven supply chain strategist evolving into AI specialist
+
           </p>
 
         </div>
