@@ -4,10 +4,6 @@ A personal portfolio website showcasing practical analytics and AI-enabled decis
 
 Built with Next.js, React, TypeScript, and Tailwind CSS.
 
-## Live Site
-
-Coming soon.
-
 ## About
 
 This portfolio documents my journey building hands-on tools that turn complex business inputs into clearer recommendations.
