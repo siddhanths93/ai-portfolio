@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import SupplierRiskCalculator from "@/components/SupplierRiskCalculator";
+import TariffExposureEstimator from "@/components/TariffExposureEstimator";
 
 type Project = {
   slug: string;
@@ -23,33 +24,20 @@ const projects: Project[] = [
       "Built a structured calculator that evaluates financial health, geographic diversification, quality performance, on-time delivery, spend concentration, and contract stability.",
     result:
       "Created a live decision-support tool that converts supplier inputs into a risk score and recommended mitigation actions.",
-    tags: ["Procurement", "Risk Analytics", "Supply Chain"],
+    tags: ["Procurement", "Risk Analytics", "Supply Chain", "Decision Support"],
   },
   {
-    slug: "spend-classification-agent",
-    title: "Spend Classification Agent",
+    slug: "tariff-exposure-estimator",
+    title: "Tariff Exposure Estimator",
     description:
-      "LLM-powered spend classification and categorization system.",
+      "Scenario-planning tool to estimate tariff cost, margin exposure, and sourcing risk.",
     problem:
-      "Spend data is often messy, inconsistently labeled, and difficult to classify at scale.",
+      "Procurement and strategy teams need a fast way to understand how tariff changes could affect landed cost, supplier exposure, and gross margin.",
     approach:
-      "Designed an AI-assisted workflow using LLMs to categorize spend descriptions and improve classification consistency.",
+      "Built an interactive estimator that combines supplier spend, tariff assumptions, supplier dependence, gross margin, and cost pass-through ability into a simple exposure model.",
     result:
-      "Created a reusable framework for turning unstructured supplier and transaction data into cleaner category insights.",
-    tags: ["LLM", "Spend Analytics", "Python", "Classification"],
-  },
-  {
-    slug: "contract-rag-assistant",
-    title: "Contract RAG Assistant",
-    description:
-      "Retrieval-based AI assistant for enterprise contract intelligence.",
-    problem:
-      "Contract terms are difficult to search, compare, and summarize manually across large document sets.",
-    approach:
-      "Designed a RAG-style assistant concept that retrieves relevant contract clauses and generates structured answers.",
-    result:
-      "Created a foundation for faster contract review, obligation tracking, and procurement decision support.",
-    tags: ["RAG", "Contracts", "Vector Search", "AI Assistant"],
+      "Created a live decision-support tool that estimates incremental tariff cost, unrecovered cost, margin exposure, and recommended sourcing actions.",
+    tags: ["Tariffs", "Landed Cost", "Sourcing Strategy", "Scenario Planning"],
   },
 ];
 
@@ -67,19 +55,20 @@ export default async function ProjectPage({
       <main className="min-h-screen bg-black text-white">
         <Navbar />
 
-        <section className="px-8 py-24">
-          <div className="max-w-4xl mx-auto">
+        <section className="px-6 py-24">
+          <div className="mx-auto max-w-4xl">
             <a
               href="/"
-              className="inline-block mb-10 text-gray-500 hover:text-white transition-colors"
+              className="mb-10 inline-block text-gray-500 transition-colors hover:text-white"
             >
               ← Back to Home
             </a>
 
-            <h1 className="text-4xl font-bold">Project not found</h1>
+            <h1 className="text-4xl font-bold">Project not active</h1>
 
-            <p className="mt-4 text-gray-400">
-              The project you are looking for does not exist.
+            <p className="mt-4 max-w-2xl text-gray-400">
+              This project is currently paused while I refine the concept and
+              implementation.
             </p>
           </div>
         </section>
@@ -91,67 +80,142 @@ export default async function ProjectPage({
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
-      <section className="px-8 py-24 border-b border-gray-900">
-        <div className="max-w-5xl mx-auto">
+      {/* HERO */}
+      <section className="px-6 pt-20 pb-14 border-b border-gray-900">
+        <div className="mx-auto max-w-6xl">
           <a
             href="/"
-            className="inline-block mb-10 text-gray-500 hover:text-white transition-colors"
+            className="mb-8 inline-block text-sm text-gray-500 transition-colors hover:text-white"
           >
             ← Back to Home
           </a>
 
-          <h1 className="text-5xl font-bold">{project.title}</h1>
+          <div className="max-w-4xl">
+            <p className="mb-4 text-sm uppercase tracking-[0.2em] text-gray-500">
+              Project Case Study
+            </p>
 
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-gray-400">
-            {project.description}
-          </p>
+            <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+              {project.title}
+            </h1>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-gray-800 bg-gray-900 px-4 py-2 text-sm text-gray-300"
-              >
-                {tag}
-              </span>
-            ))}
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-gray-400">
+              {project.description}
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-gray-800 bg-gray-950 px-4 py-2 text-sm text-gray-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="px-8 py-20">
-        <div className="max-w-5xl mx-auto grid gap-8 md:grid-cols-3">
-          <div className="rounded-2xl border border-gray-800 bg-gray-900 p-6">
-            <h2 className="text-xl font-semibold">Problem</h2>
-            <p className="mt-4 leading-relaxed text-gray-400">
-              {project.problem}
+      {/* CASE STUDY SUMMARY */}
+      <section className="px-6 py-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+              Overview
             </p>
+
           </div>
 
-          <div className="rounded-2xl border border-gray-800 bg-gray-900 p-6">
-            <h2 className="text-xl font-semibold">Approach</h2>
-            <p className="mt-4 leading-relaxed text-gray-400">
-              {project.approach}
-            </p>
-          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+                Problem
+              </p>
 
-          <div className="rounded-2xl border border-gray-800 bg-gray-900 p-6">
-            <h2 className="text-xl font-semibold">Result</h2>
-            <p className="mt-4 leading-relaxed text-gray-400">
-              {project.result}
-            </p>
+              <h3 className="text-xl font-semibold text-white">
+                Business challenge
+              </h3>
+
+              <p className="mt-4 leading-relaxed text-gray-400">
+                {project.problem}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+                Approach
+              </p>
+
+              <h3 className="text-xl font-semibold text-white">
+                Tool design
+              </h3>
+
+              <p className="mt-4 leading-relaxed text-gray-400">
+                {project.approach}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+                Result
+              </p>
+
+              <h3 className="text-xl font-semibold text-white">
+                Decision support
+              </h3>
+
+              <p className="mt-4 leading-relaxed text-gray-400">
+                {project.result}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* LIVE TOOL */}
       {project.slug === "supplier-risk-assessment" && (
-        <section className="px-8 py-20 border-t border-gray-900">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8">
-              Live Supplier Risk Calculator
-            </h2>
+        <section className="border-t border-gray-900 px-6 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8">
+              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+                Live Demo
+              </p>
+
+              <h2 className="text-3xl font-bold">
+                Supplier Risk Calculator
+              </h2>
+
+              <p className="mt-3 max-w-2xl text-gray-400">
+                Adjust supplier risk inputs to generate a weighted risk score,
+                risk level, and recommended mitigation actions.
+              </p>
+            </div>
 
             <SupplierRiskCalculator />
+          </div>
+        </section>
+      )}
+
+      {project.slug === "tariff-exposure-estimator" && (
+        <section className="border-t border-gray-900 px-6 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8">
+              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+                Live Demo
+              </p>
+
+              <h2 className="text-3xl font-bold">
+                Tariff Exposure Estimator
+              </h2>
+
+              <p className="mt-3 max-w-2xl text-gray-400">
+                Model how tariff assumptions, supplier dependence, margin
+                exposure, and cost pass-through affect sourcing risk.
+              </p>
+            </div>
+
+            <TariffExposureEstimator />
           </div>
         </section>
       )}

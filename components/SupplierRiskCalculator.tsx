@@ -1,381 +1,284 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function SupplierRiskCalculator() {
   const [formData, setFormData] = useState({
     financialHealth: 3,
-    geographicConcentration: 3,
-    qualityScore: 3,
+    geographicDiversification: 3,
+    qualityPerformance: 3,
     onTimeDelivery: 95,
     spendConcentration: 15,
-    contractLength: 2
+    contractLength: 2,
   });
-  
+
   const [showResults, setShowResults] = useState(false);
 
-  const calculateRisk = () => {
-    // Real-world risk scoring algorithm
-    const weights = {
-      financialHealth: 0.25,
-      geographicConcentration: 0.15,
-      qualityScore: 0.20,
-      onTimeDelivery: 0.15,
-      spendConcentration: 0.15,
-      contractLength: 0.10
-    };
+  const financialRisk = (5 - formData.financialHealth) * 20;
+  const geographicRisk = (5 - formData.geographicDiversification) * 20;
+  const qualityRisk = (5 - formData.qualityPerformance) * 20;
+  const deliveryRisk = 100 - formData.onTimeDelivery;
+  const spendRisk = Math.min(formData.spendConcentration * 2, 100);
+  const contractRisk =
+    formData.contractLength < 2 ? 80 : formData.contractLength > 3 ? 20 : 50;
 
-    // Normalize and weight each factor
-    const financialScore = (5 - formData.financialHealth) * 20;
-    const geoScore = (5 - formData.geographicConcentration) * 20;
-    const qualityScore = (5 - formData.qualityScore) * 20;
-    const otdScore = (100 - formData.onTimeDelivery);
-    const spendScore = Math.min(formData.spendConcentration * 2, 100);
-    const contractScore = formData.contractLength < 2 ? 80 : formData.contractLength > 3 ? 20 : 50;
+  const riskScore = Math.round(
+    financialRisk * 0.25 +
+      qualityRisk * 0.2 +
+      deliveryRisk * 0.15 +
+      geographicRisk * 0.15 +
+      spendRisk * 0.15 +
+      contractRisk * 0.1
+  );
 
-    const totalRisk = 
-      financialScore * weights.financialHealth +
-      geoScore * weights.geographicConcentration +
-      qualityScore * weights.qualityScore +
-      otdScore * weights.onTimeDelivery +
-      spendScore * weights.spendConcentration +
-      contractScore * weights.contractLength;
-
-    return Math.round(totalRisk);
-  };
-
-  const riskScore = calculateRisk();
-  const riskLevel: "High" | "Medium" | "Low" = riskScore > 70 ? 'High' : riskScore > 40 ? 'Medium' : 'Low';
-  const riskColor = riskScore > 70 ? '#DC2626' : riskScore > 40 ? '#F59E0B' : '#10B981';
+  const riskLevel: "High" | "Medium" | "Low" =
+    riskScore >= 70 ? "High" : riskScore >= 40 ? "Medium" : "Low";
 
   const recommendations = {
     High: [
-      'Immediate dual-sourcing strategy required',
-      'Monthly financial health reviews',
-      'Escalate to procurement leadership',
-      'Increase safety stock by 40-60%'
+      "Launch dual-sourcing strategy for critical materials or services.",
+      "Escalate supplier risk exposure to procurement leadership.",
+      "Increase supplier performance reviews to monthly cadence.",
+      "Evaluate safety stock, alternate suppliers, and contract risk protections.",
     ],
     Medium: [
-      'Identify backup suppliers within 90 days',
-      'Quarterly business reviews',
-      'Negotiate performance-based contracts',
-      'Monitor financial metrics monthly'
+      "Identify qualified backup suppliers within 90 days.",
+      "Conduct quarterly supplier business reviews.",
+      "Monitor financial, quality, and delivery indicators monthly.",
+      "Review contract terms for service levels, penalties, and continuity clauses.",
     ],
     Low: [
-      'Annual supplier reviews sufficient',
-      'Maintain current contract terms',
-      'Consider strategic partnership opportunities',
-      'Standard safety stock levels'
-    ]
+      "Maintain current supplier management approach.",
+      "Continue annual supplier reviews and standard performance monitoring.",
+      "Document backup suppliers as part of category contingency planning.",
+      "Consider strategic partnership opportunities if supplier performance remains strong.",
+    ],
+  };
+
+  const updateField = (field: keyof typeof formData, value: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return (
-    <div style={{
-      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      maxWidth: '900px',
-      margin: '0 auto',
-      padding: '2rem',
-      background: '#000000'
-    }}>
-      <div style={{
-        background: 'white',
-        borderRadius: '16px',
-        padding: '2.5rem',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
-      }}>
-        <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{
-            fontSize: '2rem',
-            fontWeight: '700',
-            color: '#1F2937',
-            marginBottom: '0.5rem'
-          }}>
-            Supplier Risk Assessment Tool
-          </h1>
-          <p style={{
-            color: '#6B7280',
-            fontSize: '0.95rem'
-          }}>
-            Quantify supplier risk using weighted factors that drive supply chain disruptions
+    <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8">
+      <div>
+        <h2 className="text-2xl font-bold text-white">
+          Supplier Risk Assessment Calculator
+        </h2>
+
+        <p className="mt-3 max-w-3xl text-gray-400">
+          Evaluate supplier risk using weighted procurement factors including
+          financial health, quality, delivery performance, geographic exposure,
+          spend concentration, and contract stability.
+        </p>
+      </div>
+
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            Financial Health: {formData.financialHealth}
+          </label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            value={formData.financialHealth}
+            onChange={(e) =>
+              updateField("financialHealth", Number(e.target.value))
+            }
+            className="mt-3 w-full"
+            style={{
+              accentColor: "#FFFFFF",
+            }}
+          />
+          <div className="mt-1 flex justify-between text-xs text-gray-500">
+            <span>Poor</span>
+            <span>Excellent</span>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            Geographic Diversification: {formData.geographicDiversification}
+          </label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            value={formData.geographicDiversification}
+            onChange={(e) =>
+              updateField("geographicDiversification", Number(e.target.value))
+            }
+            className="mt-3 w-full"
+            style={{
+              accentColor: "#FFFFFF",
+            }}
+          />
+          <div className="mt-1 flex justify-between text-xs text-gray-500">
+            <span>Single Site</span>
+            <span>Multi-Region</span>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            Quality Performance: {formData.qualityPerformance}
+          </label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            value={formData.qualityPerformance}
+            onChange={(e) =>
+              updateField("qualityPerformance", Number(e.target.value))
+            }
+            className="mt-3 w-full"
+            style={{
+              accentColor: "#FFFFFF",
+            }}
+          />
+          <div className="mt-1 flex justify-between text-xs text-gray-500">
+            <span>Poor</span>
+            <span>Excellent</span>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            On-Time Delivery Rate (%)
+          </label>
+          <input
+            type="number"
+            min="50"
+            max="100"
+            value={formData.onTimeDelivery}
+            onChange={(e) =>
+              updateField("onTimeDelivery", Number(e.target.value))
+            }
+            className="mt-2 w-full rounded-lg border border-gray-700 bg-black p-3 text-white outline-none focus:border-gray-500"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            Spend Concentration (%)
+          </label>
+          <input
+            type="number"
+            min="0"
+            max="100"
+            value={formData.spendConcentration}
+            onChange={(e) =>
+              updateField("spendConcentration", Number(e.target.value))
+            }
+            className="mt-2 w-full rounded-lg border border-gray-700 bg-black p-3 text-white outline-none focus:border-gray-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Approximate share of total category or procurement spend tied to
+            this supplier.
           </p>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gap: '1.5rem',
-          marginBottom: '2rem'
-        }}>
-          {/* Financial Health */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              Financial Health (1=Poor, 5=Excellent)
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="5"
-              value={formData.financialHealth}
-              onChange={(e) => setFormData({...formData, financialHealth: Number(e.target.value)})}
-              style={{ width: '100%',   accentColor: '#000000', background: '#FFFFFF' }}
-            />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#9CA3AF', marginTop: '0.25rem' }}>
-              <span>Poor</span>
-              <span style={{ fontWeight: '600', color: '#374151' }}>{formData.financialHealth}</span>
-              <span>Excellent</span>
+        <div>
+          <label className="text-sm font-medium text-gray-300">
+            Contract Length (years)
+          </label>
+          <input
+            type="number"
+            min="0"
+            max="10"
+            step="0.5"
+            value={formData.contractLength}
+            onChange={(e) =>
+              updateField("contractLength", Number(e.target.value))
+            }
+            className="mt-2 w-full rounded-lg border border-gray-700 bg-black p-3 text-white outline-none focus:border-gray-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Shorter or unstable contracts may increase pricing and continuity
+            risk.
+          </p>
+        </div>
+      </div>
+
+      <button
+        onClick={() => setShowResults(true)}
+        className="mt-8 w-full rounded-xl bg-white px-6 py-3 font-semibold text-black transition hover:bg-gray-200"
+      >
+        Calculate Supplier Risk
+      </button>
+
+      {showResults && (
+        <div className="mt-8 rounded-2xl border border-gray-800 bg-black p-6">
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+              <p className="text-sm text-gray-400">Supplier Risk Score</p>
+              <p className="mt-2 text-3xl font-bold text-white">
+                {riskScore}/100
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+              <p className="text-sm text-gray-400">Risk Level</p>
+              <p className="mt-2 text-3xl font-bold text-white">
+                {riskLevel}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+              <p className="text-sm text-gray-400">Primary Exposure</p>
+              <p className="mt-2 text-2xl font-bold text-white">
+                {riskScore >= 70
+                  ? "High Disruption"
+                  : riskScore >= 40
+                  ? "Moderate Watchlist"
+                  : "Stable Supplier"}
+              </p>
             </div>
           </div>
 
-          {/* Geographic Concentration */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              Geographic Diversification (1=Single location, 5=Highly diversified)
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="5"
-              value={formData.geographicConcentration}
-              onChange={(e) => setFormData({...formData, geographicConcentration: Number(e.target.value)})}
-              style={{ width: '100%',   accentColor: '#000000', background: '#FFFFFF'}}
-            />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#9CA3AF', marginTop: '0.25rem' }}>
-              <span>Single Site</span>
-              <span style={{ fontWeight: '600', color: '#374151' }}>{formData.geographicConcentration}</span>
-              <span>Multi-Region</span>
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold text-white">
+              Recommended Actions
+            </h3>
+
+            <ul className="mt-4 space-y-3 text-gray-300">
+              {recommendations[riskLevel].map((rec) => (
+                <li
+                  key={rec}
+                  className="rounded-lg border border-gray-800 bg-gray-900 p-4"
+                >
+                  {rec}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-gray-800 bg-gray-900 p-5">
+            <h3 className="font-semibold text-white">Methodology</h3>
+            <p className="mt-3 text-sm leading-relaxed text-gray-400">
+              The supplier risk score is a weighted scenario model based on
+              common procurement risk dimensions: financial health, quality
+              performance, delivery reliability, geographic diversification,
+              spend concentration, and contract stability. The model is intended
+              as a decision-support prototype and can be tuned by category,
+              industry, and supplier criticality.
+            </p>
+
+            <div className="mt-4 grid gap-3 text-sm text-gray-400 md:grid-cols-2">
+              <p>Financial Health: 25%</p>
+              <p>Quality Performance: 20%</p>
+              <p>On-Time Delivery: 15%</p>
+              <p>Geographic Diversification: 15%</p>
+              <p>Spend Concentration: 15%</p>
+              <p>Contract Stability: 10%</p>
             </div>
-          </div>
-
-          {/* Quality Score */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              Quality Performance (1=Poor, 5=Excellent)
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="5"
-              value={formData.qualityScore}
-              onChange={(e) => setFormData({...formData, qualityScore: Number(e.target.value)})}
-              style={{ width: '100%',   accentColor: '#000000', background: '#FFFFFF' }}
-            />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#9CA3AF', marginTop: '0.25rem' }}>
-              <span>Poor</span>
-              <span style={{ fontWeight: '600', color: '#374151' }}>{formData.qualityScore}</span>
-              <span>Excellent</span>
-            </div>
-          </div>
-
-          {/* On-Time Delivery */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              On-Time Delivery Rate (%)
-            </label>
-            <input
-              type="number"
-              min="50"
-              max="100"
-              value={formData.onTimeDelivery}
-              onChange={(e) => setFormData({...formData, onTimeDelivery: Number(e.target.value)})}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '2px solid #E5E7EB',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                color: '#111827',
-                background: '#FFFFFF'
-              }}
-            />
-          </div>
-
-          {/* Spend Concentration */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              Spend Concentration (% of total procurement)
-            </label>
-            <input
-              type="number"
-              min="0"
-              max="100"
-              value={formData.spendConcentration}
-              onChange={(e) => setFormData({...formData, spendConcentration: Number(e.target.value)})}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '2px solid #E5E7EB',
-                borderRadius: '8px',
-                fontSize: '1rem',color: '#111827',
-                background: '#FFFFFF'
-              }}
-            />
-          </div>
-
-          {/* Contract Length */}
-          <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '0.5rem'
-            }}>
-              Contract Length (years)
-            </label>
-            <input
-              type="number"
-              min="0"
-              max="10"
-              step="0.5"
-              value={formData.contractLength}
-              onChange={(e) => setFormData({...formData, contractLength: Number(e.target.value)})}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '2px solid #E5E7EB',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                color: '#111827',
-                background: '#FFFFFF'
-              }}
-            />
           </div>
         </div>
-
-        <button
-          onClick={() => setShowResults(true)}
-          style={{
-            width: '100%',
-            padding: '1rem',
-            background: '#111827',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'transform 0.2s',
-            marginBottom: '2rem'
-          }}
-          onMouseOver={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1.02)'}
-          onMouseOut={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          Calculate Risk Score
-        </button>
-
-        {showResults && (
-          <div style={{
-            background: '#F9FAFB',
-            borderRadius: '12px',
-            padding: '2rem',
-            border: `3px solid ${riskColor}`
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <div style={{
-                fontSize: '4rem',
-                fontWeight: '700',
-                color: riskColor,
-                marginBottom: '0.5rem'
-              }}>
-                {riskScore}
-              </div>
-              <div style={{
-                fontSize: '1.5rem',
-                fontWeight: '600',
-                color: '#1F2937',
-                marginBottom: '0.5rem'
-              }}>
-                {riskLevel} Risk
-              </div>
-              <div style={{
-                fontSize: '0.875rem',
-                color: '#6B7280'
-              }}>
-                Risk Score: 0-40 (Low), 41-70 (Medium), 71-100 (High)
-              </div>
-            </div>
-
-            <div>
-              <h3 style={{
-                fontSize: '1.125rem',
-                fontWeight: '600',
-                color: '#1F2937',
-                marginBottom: '1rem'
-              }}>
-                Recommended Actions
-              </h3>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0
-              }}>
-                {recommendations[riskLevel].map((rec, idx) => (
-                  <li key={idx} style={{
-                    padding: '0.75rem',
-                    background: 'white',
-                    borderRadius: '8px',
-                    marginBottom: '0.5rem',
-                    borderLeft: `4px solid ${riskColor}`,
-                    fontSize: '0.875rem',
-                    color: '#374151'
-                  }}>
-                    {rec}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div style={{
-              marginTop: '1.5rem',
-              padding: '1rem',
-              background: 'white',
-              borderRadius: '8px',
-              fontSize: '0.75rem',
-              color: '#6B7280'
-            }}>
-              <strong>Methodology:</strong> Risk score calculated using weighted factors: Financial Health (25%), Quality (20%), On-Time Delivery (15%), Geographic Risk (15%), Spend Concentration (15%), Contract Stability (10%)
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div style={{
-        textAlign: 'center',
-        marginTop: '2rem',
-        color: 'white',
-        fontSize: '0.875rem'
-      }}>
-        Built by Sid Shetty • Procurement & Supply Chain Analytics
-      </div>
+      )}
     </div>
   );
 }
