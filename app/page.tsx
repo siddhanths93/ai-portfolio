@@ -135,7 +135,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <ProjectCard
               href="/projects/supplier-risk-assessment"
               title="Supplier Risk Assessment"
@@ -146,6 +146,12 @@ export default function HomePage() {
               href="/projects/tariff-exposure-estimator"
               title="Tariff Exposure Estimator"
               description="Scenario-planning tool to estimate tariff cost, margin exposure, and sourcing risk."
+            />
+
+            <ProjectCard
+              href="/projects/ten-k-insight-agent"
+              title="10-K Insight Agent"
+              description="Document intelligence tool that analyzes annual reports for business model, risk themes, strategy signals, and financial health."
             />
           </div>
         </div>

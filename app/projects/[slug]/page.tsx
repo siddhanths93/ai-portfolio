@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SupplierRiskCalculator from "@/components/SupplierRiskCalculator";
 import TariffExposureEstimator from "@/components/TariffExposureEstimator";
+import TenKInsightAgent from "@/components/TenKInsightAgent";
 
 type Project = {
   slug: string;
@@ -38,6 +39,23 @@ const projects: Project[] = [
     result:
       "Created a live decision-support tool that estimates incremental tariff cost, unrecovered cost, margin exposure, and recommended sourcing actions.",
     tags: ["Tariffs", "Landed Cost", "Sourcing Strategy", "Scenario Planning"],
+  },
+  {
+  slug: "ten-k-insight-agent",
+  title: "10-K Insight Agent",
+  description:
+    "Document intelligence tool that analyzes annual reports for business model, risk themes, strategy signals, and financial health.",
+  problem:
+    "Annual reports contain valuable business, risk, and financial information, but the documents are long, dense, and difficult to quickly synthesize into actionable insights.",
+  approach:
+    "Built an interactive analyzer that combines 10-K filing text with key financial inputs to identify risk themes, opportunity signals, financial health indicators, red flags, and analyst-style questions.",
+  result:
+    "Created a structured company intelligence brief that helps users quickly understand business drivers, risks, financial signals, and areas for deeper research.",
+  tags: [
+    "10-K Analysis",
+    "Financial Analysis",
+    "Document Intelligence",
+    "Decision Support",],
   },
 ];
 
@@ -219,6 +237,29 @@ export default async function ProjectPage({
           </div>
         </section>
       )}
+
+      {project.slug === "ten-k-insight-agent" && (
+        <section className="border-t border-gray-900 px-6 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8">
+              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+                Live Demo
+              </p>
+
+              <h2 className="text-3xl font-bold">
+                10-K Insight Agent
+              </h2>
+
+              <p className="mt-3 max-w-2xl text-gray-400">
+                Upload or paste annual report text and enter financials to generate a
+                structured business, risk, and financial analysis brief.
+              </p>
+            </div>
+
+            <TenKInsightAgent />
+          </div>
+        </section>
+    )}
     </main>
   );
 }
