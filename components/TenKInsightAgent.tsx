@@ -277,7 +277,7 @@ export default function TenKInsightAgent() {
     <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8">
       <div>
         <h2 className="text-2xl font-bold text-white">
-          10-K PDF Document Intelligence Agent
+          10-K Document Intelligence Agent
         </h2>
 
         <p className="mt-3 max-w-3xl text-gray-400">
