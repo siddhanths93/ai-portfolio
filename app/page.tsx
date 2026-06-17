@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
+const SUPPLIER_SPEND_APP_URL = "https://supplier-performance-briefing-5k3n38kxgqwe3g7n7q3tbf.streamlit.app/";
+
 const focusAreas = [
   {
     title: "Decision Intelligence",
@@ -28,6 +30,7 @@ const projects = [
   {
     title: "Supplier Performance & Spend Intelligence Dashboard",
     slug: "supplier-performance-spend-intelligence",
+    appUrl: SUPPLIER_SPEND_APP_URL,
     description:
       "A Python and Streamlit procurement analytics app that turns messy supplier spend files into spend insights, supplier categorization, rationalization opportunities, savings estimates, and procurement action recommendations.",
     tags: [
@@ -155,10 +158,7 @@ export default function Home() {
               Procurement Analytics Tool
             </h2>
 
-            <Link
-              href={`/projects/${featuredProject.slug}`}
-              className="group mt-8 block rounded-3xl border border-blue-500/30 bg-slate-950/90 p-7 shadow-lg shadow-blue-950/30 transition hover:-translate-y-1 hover:border-blue-400/70"
-            >
+            <div className="mt-8 rounded-3xl border border-blue-500/30 bg-slate-950/90 p-7 shadow-lg shadow-blue-950/30">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-300">
@@ -173,10 +173,6 @@ export default function Home() {
                     {featuredProject.description}
                   </p>
                 </div>
-
-                <span className="text-blue-300 transition group-hover:translate-x-1">
-                  View project →
-                </span>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -212,7 +208,29 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </Link>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href={`/projects/${featuredProject.slug}`}
+                  className="rounded-full bg-blue-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-400"
+                >
+                  View case study →
+                </Link>
+
+                {featuredProject.appUrl &&
+                  featuredProject.appUrl !==
+                    "PASTE_YOUR_STREAMLIT_APP_URL_HERE" && (
+                    <a
+                      href={featuredProject.appUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
+                    >
+                      Launch live app ↗
+                    </a>
+                  )}
+              </div>
+            </div>
           </section>
         )}
 

@@ -6,7 +6,8 @@ const projects = {
   "supplier-performance-spend-intelligence": {
     title: "Supplier Performance & Spend Intelligence Dashboard",
     eyebrow: "Procurement Analytics · Python · Streamlit",
-    description:
+    appUrl: "https://supplier-performance-briefing-5k3n38kxgqwe3g7n7q3tbf.streamlit.app/",
+      description:
       "A practical procurement analytics application that turns messy supplier spend files into spend insights, supplier categorization, rationalization opportunities, directional savings estimates, and procurement action recommendations.",
     problem:
       "Supplier spend data is rarely clean. Real files often contain inconsistent supplier names, multiple Excel tabs, varied column names, missing categories, multiple currencies, transaction-level rows, contract gaps, and extra ERP fields. Most dashboards assume clean input, but procurement analysis usually starts with data preparation and validation.",
@@ -38,8 +39,8 @@ const projects = {
       "Procurement Analytics",
       "Data Quality",
     ],
-    talkTrack:
-      "I built this because procurement analytics rarely starts with clean data. The tool accepts messy supplier spend files, maps common real-world column names, classifies suppliers, identifies fragmented categories, estimates directional savings, and groups recommendations into procurement initiatives like preferred supplier rationalization, tail spend cleanup, and contract coverage review.",
+    // talkTrack:
+    //   "I built this because procurement analytics rarely starts with clean data. The tool accepts messy supplier spend files, maps common real-world column names, classifies suppliers, identifies fragmented categories, estimates directional savings, and groups recommendations into procurement initiatives like preferred supplier rationalization, tail spend cleanup, and contract coverage review.",
   },
   "supplier-risk-assessment": {
     title: "Supplier Risk Assessment",
@@ -188,10 +189,10 @@ export default async function ProjectPage({
           </p>
         </section>
 
-        <section className="mt-12 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-7">
-          <h2 className="text-2xl font-semibold">Interview Talk Track</h2>
-          <p className="mt-4 leading-8 text-slate-200">{project.talkTrack}</p>
-        </section>
+        {/*<section className="mt-12 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-7">*/}
+        {/*  <h2 className="text-2xl font-semibold">Interview Talk Track</h2>*/}
+        {/*  <p className="mt-4 leading-8 text-slate-200">{project.talkTrack}</p>*/}
+        {/*</section>*/}
       </div>
     </main>
   );
