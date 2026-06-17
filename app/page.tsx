@@ -1,160 +1,259 @@
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import ProjectCard from "@/components/ProjectCard";
 
-export default function HomePage() {
+const focusAreas = [
+  {
+    title: "Decision Intelligence",
+    description:
+      "Turning assumptions, risks, and business inputs into structured recommendations.",
+  },
+  {
+    title: "Risk Modeling",
+    description:
+      "Building practical models for supplier risk, tariff exposure, cost pressure, and scenario planning.",
+  },
+  {
+    title: "Enterprise Analytics",
+    description:
+      "Applying analytics to messy operational data and translating it into clear business action.",
+  },
+  {
+    title: "AI-Enabled Workflows",
+    description:
+      "Exploring how AI can support analysis, prioritization, monitoring, and decision support.",
+  },
+];
+
+const projects = [
+  {
+    title: "Supplier Performance & Spend Intelligence Dashboard",
+    slug: "supplier-performance-spend-intelligence",
+    description:
+      "A Python and Streamlit procurement analytics app that turns messy supplier spend files into spend insights, supplier categorization, rationalization opportunities, savings estimates, and procurement action recommendations.",
+    tags: [
+      "Python",
+      "Streamlit",
+      "Pandas",
+      "Plotly",
+      "Procurement Analytics",
+      "Data Quality",
+    ],
+    featured: true,
+  },
+  {
+    title: "Supplier Risk Assessment",
+    slug: "supplier-risk-assessment",
+    description:
+      "A supplier risk scoring tool that evaluates financial, geographic, quality, delivery, spend concentration, and contract risk factors.",
+    tags: ["React", "Risk Analytics", "Supply Chain", "Tailwind"],
+    featured: false,
+  },
+  {
+    title: "Tariff Exposure Estimator",
+    slug: "tariff-exposure-estimator",
+    description:
+      "A scenario-based tariff exposure estimator for analyzing import cost risk, country exposure, and landed cost sensitivity.",
+    tags: ["React", "Trade Analytics", "Scenario Modeling", "Tariffs"],
+    featured: false,
+  },
+  {
+    title: "10-K Insight Agent",
+    slug: "ten-k-insight-agent",
+    description:
+      "An AI-assisted financial document analysis concept that extracts company insights from uploaded 10-K filings.",
+    tags: ["AI", "Document Analysis", "Next.js", "Finance"],
+    featured: false,
+  },
+];
+
+export default function Home() {
+  const featuredProject = projects.find((project) => project.featured);
+  const otherProjects = projects.filter((project) => !project.featured);
+
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* HERO SECTION */}
-      <section id="home" className="px-6 pt-24 pb-14">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-4xl">
-            <p className="mb-4 text-sm uppercase tracking-[0.25em] text-gray-500">
-              Hi, I’m Sid Shetty
+      <section className="mx-auto max-w-7xl px-6 pb-20 pt-28">
+        <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+          Hi, I&apos;m Sid Shetty
+        </p>
+
+        <h1 className="mt-8 max-w-5xl text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
+          Building AI-enabled tools for{" "}
+          <span className="bg-gradient-to-r from-blue-500 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            better business decisions.
+          </span>
+        </h1>
+
+        <p className="mt-8 max-w-3xl text-xl leading-8 text-slate-300">
+          I build practical analytics and AI-enabled decision-support tools that
+          help teams assess risk, model cost exposure, and turn complex business
+          inputs into clear recommendations.
+        </p>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-7 shadow-lg shadow-blue-950/20">
+            <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+              Experience
             </p>
 
-            <h1 className="max-w-5xl text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
-              Building AI-enabled tools for{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                better business decisions.
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-gray-400">
-              I build practical analytics and AI-enabled decision-support tools
-              that help teams assess risk, model cost exposure, and turn complex
-              business inputs into clear recommendations.
-            </p>
-          </div>
-
-          {/* EXPERIENCE + LEARNING JOURNEY */}
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
-                Experience
-              </p>
-
-              <h2 className="mt-3 text-xl font-semibold text-white">
-                8+ years in analytics, procurement, and transformation
-              </h2>
-
-              <p className="mt-3 text-sm leading-relaxed text-gray-400">
-                Experience translating messy operational data into clear
-                business recommendations across procurement, supply chain, and
-                enterprise operations.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
-                Learning Journey
-              </p>
-
-              <h2 className="mt-3 text-xl font-semibold text-white">
-                Georgia Tech MS Analytics candidate with an AI focus
-              </h2>
-
-              <p className="mt-3 text-sm leading-relaxed text-gray-400">
-                Building hands-on projects to explore how AI, automation, and
-                decision intelligence can support real enterprise workflows.
-              </p>
-            </div>
-          </div>
-
-          {/* FOCUS AREAS */}
-          <div className="mt-12">
-            <p className="mb-4 text-sm uppercase tracking-[0.2em] text-gray-500">
-              Focus Areas
-            </p>
-
-            <div className="grid gap-4 md:grid-cols-4">
-              <div className="rounded-2xl border border-gray-800 bg-gray-950 p-5">
-                <p className="font-semibold text-white">
-                  Decision Intelligence
-                </p>
-
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  Turning assumptions, risks, and business inputs into
-                  structured recommendations.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-gray-800 bg-gray-950 p-5">
-                <p className="font-semibold text-white">
-                  Risk Modeling
-                </p>
-
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  Building practical models for supplier risk, tariff exposure,
-                  cost pressure, and scenario planning.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-gray-800 bg-gray-950 p-5">
-                <p className="font-semibold text-white">
-                  Enterprise Analytics
-                </p>
-
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  Applying analytics to messy operational data and translating
-                  it into clear business action.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-gray-800 bg-gray-950 p-5">
-                <p className="font-semibold text-white">
-                  AI-Enabled Workflows
-                </p>
-
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  Exploring how AI can support analysis, prioritization,
-                  monitoring, and decision support.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROJECTS SECTION */}
-      <section id="projects" className="border-t border-gray-900 px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-10">
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
-              Featured Work
-            </p>
-
-            <h2 className="text-3xl font-bold">
-              Interactive business tools
+            <h2 className="mt-5 text-2xl font-bold leading-8">
+              8+ years in analytics, procurement, and transformation
             </h2>
 
-            <p className="mt-3 max-w-2xl text-gray-400">
-              A growing collection of hands-on tools built around real business
-              problems.
+            <p className="mt-5 leading-7 text-slate-300">
+              Experience translating messy operational data into clear business
+              recommendations across procurement, supply chain, and enterprise
+              operations.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            <ProjectCard
-              href="/projects/supplier-risk-assessment"
-              title="Supplier Risk Assessment"
-              description="Interactive supplier risk assessment tool using weighted procurement risk factors and recommended mitigation actions."
-            />
+          <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-7 shadow-lg shadow-blue-950/20">
+            <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+              Learning Journey
+            </p>
 
-            <ProjectCard
-              href="/projects/tariff-exposure-estimator"
-              title="Tariff Exposure Estimator"
-              description="Scenario-planning tool to estimate tariff cost, margin exposure, and sourcing risk."
-            />
+            <h2 className="mt-5 text-2xl font-bold leading-8">
+              Georgia Tech MS Analytics candidate with an AI focus
+            </h2>
 
-            <ProjectCard
-              href="/projects/ten-k-insight-agent"
-              title="10-K Insight Agent"
-              description="Document intelligence tool that analyzes annual reports for business model, risk themes, strategy signals, and financial health."
-            />
+            <p className="mt-5 leading-7 text-slate-300">
+              Building hands-on projects to explore how AI, automation, and
+              decision intelligence can support real enterprise workflows.
+            </p>
           </div>
         </div>
+
+        <section className="mt-16">
+          <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+            Focus Areas
+          </p>
+
+          <div className="mt-6 grid gap-5 md:grid-cols-4">
+            {focusAreas.map((area) => (
+              <div
+                key={area.title}
+                className="rounded-2xl border border-slate-800 bg-slate-950/80 p-6 transition hover:-translate-y-1 hover:border-blue-500/50"
+              >
+                <h3 className="text-lg font-bold">{area.title}</h3>
+                <p className="mt-4 leading-7 text-slate-400">
+                  {area.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {featuredProject && (
+          <section className="mt-20">
+            <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+              Featured Portfolio Project
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+              Procurement Analytics Tool
+            </h2>
+
+            <Link
+              href={`/projects/${featuredProject.slug}`}
+              className="group mt-8 block rounded-3xl border border-blue-500/30 bg-slate-950/90 p-7 shadow-lg shadow-blue-950/30 transition hover:-translate-y-1 hover:border-blue-400/70"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-300">
+                    Featured Project
+                  </span>
+
+                  <h3 className="mt-5 max-w-4xl text-2xl font-bold md:text-3xl">
+                    {featuredProject.title}
+                  </h3>
+
+                  <p className="mt-4 max-w-4xl leading-7 text-slate-300">
+                    {featuredProject.description}
+                  </p>
+                </div>
+
+                <span className="text-blue-300 transition group-hover:translate-x-1">
+                  View project →
+                </span>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {featuredProject.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs text-slate-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-7 grid gap-4 md:grid-cols-3">
+                <div className="rounded-2xl border border-slate-800 bg-black/40 p-4">
+                  <p className="text-xl font-bold text-blue-300">Spend</p>
+                  <p className="mt-1 text-sm text-slate-400">
+                    Analysis and categorization
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-800 bg-black/40 p-4">
+                  <p className="text-xl font-bold text-indigo-300">Savings</p>
+                  <p className="mt-1 text-sm text-slate-400">
+                    Directional opportunity estimates
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-800 bg-black/40 p-4">
+                  <p className="text-xl font-bold text-purple-300">Actions</p>
+                  <p className="mt-1 text-sm text-slate-400">
+                    Procurement next-step recommendations
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </section>
+        )}
+
+        <section id="projects" className="mt-20">
+          <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
+            Other Projects
+          </p>
+
+          <h2 className="mt-4 text-3xl font-bold md:text-4xl">Portfolio</h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {otherProjects.map((project) => (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className="group rounded-2xl border border-slate-800 bg-slate-950/80 p-6 transition hover:-translate-y-1 hover:border-blue-500/50"
+              >
+                <h3 className="text-xl font-bold">{project.title}</h3>
+
+                <p className="mt-4 leading-7 text-slate-400">
+                  {project.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-slate-900 px-3 py-1 text-xs text-slate-400"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-6 text-sm text-blue-300 transition group-hover:translate-x-1">
+                  View project →
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
       </section>
     </main>
   );
