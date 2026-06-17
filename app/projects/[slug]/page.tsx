@@ -63,7 +63,35 @@ const projects = {
     talkTrack:
       "This project shows how supplier risk factors can be translated into a structured scoring model and a simple decision-support interface.",
   },
-  "tariff-exposure-estimator": {
+  "supplier-normalization-workbench": {
+  title: "Supplier Normalization Workbench",
+  eyebrow: "Procurement Data Quality · Fuzzy Matching",
+  description:
+    "A supplier data-quality workbench for standardizing messy vendor names, detecting duplicate supplier records, and creating cleaner supplier-family mappings for spend analytics.",
+  problem:
+    "ERP and vendor-master data often contains inconsistent supplier names such as IBM, I.B.M. Corp, IBM Corporation, and International Business Machines. These inconsistencies distort supplier counts, spend concentration, category fragmentation, and sourcing opportunity analysis.",
+  solution:
+    "I built a standalone Streamlit workbench that cleans supplier names, applies known alias rules, uses RapidFuzz fuzzy matching, groups similar suppliers into normalized supplier families, flags risky matches for human review, and exports cleaner supplier data for downstream spend analytics.",
+  features: [
+    "Supplier name cleaning and standardization",
+    "Known alias matching",
+    "RapidFuzz fuzzy duplicate detection",
+    "Match confidence scoring",
+    "False-positive risk flagging",
+    "Human review queue",
+    "Golden supplier record recommendations",
+    "Before-and-after supplier count impact",
+    "Exportable normalized supplier data",
+  ],
+  demonstrates:
+    "This project demonstrates procurement data-quality thinking, fuzzy matching logic, human-in-the-loop review design, and the foundational role of supplier normalization in spend analytics and sourcing diagnostics.",
+  tags: ["Python", "Streamlit", "Procurement", "Data Quality", "RapidFuzz"],
+  talkTrack:
+    "This project frames supplier standardization as a procurement data-quality problem, not just a fuzzy matching exercise. It shows how messy ERP supplier names can be converted into cleaner, reviewable supplier families before running spend analytics, category strategy, or sourcing opportunity analysis.",
+  demoUrl: "https://supplier-normalization-workbench.streamlit.app/",
+  githubUrl: "https://github.com/siddhanths93/supplier-normalization-workbench",
+  },
+"tariff-exposure-estimator": {
     title: "Tariff Exposure Estimator",
     eyebrow: "Trade Analytics · Scenario Modeling",
     description:
@@ -143,7 +171,20 @@ export default async function ProjectPage({
             {project.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
+            {"demoUrl" in project && project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+              >
+                Open Live Demo
+              </a>
+            )}
+          </div>
+
+<div className="mt-8 flex flex-wrap gap-3">
             {project.tags.map((tag) => (
               <span
                 key={tag}

@@ -60,6 +60,16 @@ const projects = [
     featured: false,
   },
   {
+  title: "Supplier Normalization Workbench",
+  slug: "supplier-normalization-workbench",
+  description:
+    "A procurement data-quality tool that standardizes messy supplier names, detects duplicate vendor records, recommends supplier families, flags questionable matches for human review, and exports cleaner supplier data for spend analytics.",
+  tags: ["Procurement", "Data Quality", "Fuzzy Matching", "Python", "Streamlit"],
+  image: "/projects/supplier-normalization.png",
+  githubUrl: "https://github.com/YOUR_USERNAME/supplier-normalization-workbench",
+  demoUrl: "https://YOUR_STREAMLIT_APP_URL.streamlit.app",
+},
+{
     title: "10-K Insight Agent",
     slug: "ten-k-insight-agent",
     description:
