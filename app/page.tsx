@@ -7,6 +7,7 @@ const SUPPLIER_SPEND_APP_URL = "https://supplier-performance-briefing-5k3n38kxgq
   TEST: World Cup deploy check
 </div> */}
 
+
 const focusAreas = [
   {
     title: "Decision Intelligence",
@@ -56,6 +57,13 @@ const projects = [
   // githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
 },
 {
+  title: "Reddit Pulse Lab",
+  slug: "reddit-pulse-lab",
+  description: "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, and similar-thread recommendations.",
+  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+  featured: false,
+},
+{
     title: "Supplier Risk Assessment",
     slug: "supplier-risk-assessment",
     description:
@@ -98,6 +106,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar />
+
+{/* <h1 style={{ color: "red", fontSize: "48px" }}>REDDIT TEST CARD CHANGE</h1> */}
 
       <section className="mx-auto max-w-7xl px-6 pb-20 pt-28">
         <p className="text-sm uppercase tracking-[0.45em] text-slate-500">
