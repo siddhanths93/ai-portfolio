@@ -48,21 +48,6 @@ const projects = [
     ],
     featured: true,
   },
-  {
-  title: "World Cup Drama Lab",
-  slug: "world-cup-drama-lab",
-  description: "A free-data World Cup storytelling app that turns match results into recaps, group chaos, and qualification scenarios.",
-  tags: ["Streamlit", "Python", "Sports Analytics", "GitHub Actions"],
-  // demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
-  // githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
-},
-{
-  title: "Reddit Pulse Lab",
-  slug: "reddit-pulse-lab",
-  description: "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, and similar-thread recommendations.",
-  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
-  featured: false,
-},
 {
     title: "Supplier Risk Assessment",
     slug: "supplier-risk-assessment",
@@ -88,6 +73,21 @@ const projects = [
   image: "/projects/supplier-normalization.png",
   githubUrl: "https://github.com/siddhanths93/supplier-normalization-workbench",
   demoUrl: "https://supplier-normalization-workbench.streamlit.app/",
+},
+  {
+  title: "World Cup Drama Lab",
+  slug: "world-cup-drama-lab",
+  description: "A free-data World Cup storytelling app that turns match results into recaps, group chaos, and qualification scenarios.",
+  tags: ["Streamlit", "Python", "Sports Analytics", "GitHub Actions"],
+  // demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
+  // githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
+},
+{
+  title: "Reddit Pulse Lab",
+  slug: "reddit-pulse-lab",
+  description: "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, and similar-thread recommendations.",
+  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+  featured: false,
 },
 {
     title: "10-K Insight Agent",
@@ -117,14 +117,12 @@ export default function Home() {
         <h1 className="mt-8 max-w-5xl text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
           Building AI-enabled tools for{" "}
           <span className="bg-gradient-to-r from-blue-500 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
-            better business decisions.
+            strategic sourcing decisions.
           </span>
         </h1>
 
         <p className="mt-8 max-w-3xl text-xl leading-8 text-slate-300">
-          I build practical analytics and AI-enabled decision-support tools that
-          help teams assess risk, model cost exposure, and turn complex business
-          inputs into clear recommendations.
+          I build practical procurement analytics and AI decision-support tools that help teams evaluate suppliers, model cost exposure, identify sourcing opportunities, and improve supply chain decision-making.
         </p>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2">

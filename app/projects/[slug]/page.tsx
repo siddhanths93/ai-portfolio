@@ -42,66 +42,6 @@ const projects = {
     // talkTrack:
     //   "I built this because procurement analytics rarely starts with clean data. The tool accepts messy supplier spend files, maps common real-world column names, classifies suppliers, identifies fragmented categories, estimates directional savings, and groups recommendations into procurement initiatives like preferred supplier rationalization, tail spend cleanup, and contract coverage review.",
   },
-  "world-cup-drama-lab": {
-  title: "World Cup Drama Lab",
-  eyebrow: "Sports Analytics · Streamlit · Automated Data Refresh",
-  description:
-    "A free-data World Cup storytelling app that turns match results into fan-friendly recaps, group-stage chaos, and qualification survival scenarios.",
-  problem:
-    "Most sports data apps either feel too statistical for casual fans or rely on official branding, paid data, player images, betting odds, or complex event-level analytics. I wanted to build something that made the tournament easier to follow using only lightweight public-style match data and a copyright-safe interface.",
-  solution:
-    "I built a standalone Streamlit app that reads local JSON match data, translates scores and standings into plain-English stories, generates match recap cards, explains group-stage chaos, and lets users simulate qualification scenarios. A GitHub Actions workflow refreshes match data hourly from football-data.org while the deployed app itself only reads committed local JSON.",
-  features: [
-    "Clickable match recap board",
-    "Fan-friendly match story summaries",
-    "Scoreline verdicts and match mood scoring",
-    "Group chaos explanations",
-    "Plain-English soccer explanations for beginners",
-    "Qualification survival cards",
-    "Interactive group-stage scenario simulator",
-    "Sidebar standings and finished match scores",
-    "Hourly GitHub Actions data refresh",
-    "Copyright-safe UI with no player photos, official crests, or FIFA artwork",
-  ],
-  demonstrates:
-    "This project demonstrates product thinking, sports analytics storytelling, Streamlit app development, automated data refresh design, lightweight data engineering, and copyright-safe portfolio product design.",
-  tags: ["Python", "Streamlit", "Sports Analytics", "GitHub Actions", "Data Storytelling"],
-  talkTrack:
-    "This project shows how a simple data product can turn raw match results into a more engaging fan experience. The focus is not advanced prediction or betting analytics — it is productizing data into recaps, explanations, and scenarios that a casual user can understand quickly.",
-  demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
-  githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
-},
-"reddit-pulse-lab": {
-  title: "Reddit Pulse Lab",
-  eyebrow: "Reddit API · NLP · Discussion Intelligence",
-  description:
-    "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, engagement patterns, and similar-thread recommendations.",
-  problem:
-    "Reddit contains valuable public discussion signals, but raw API responses are deeply nested, paginated, noisy, and hard to interpret directly. A user needs a clean way to turn posts into themes, keywords, related threads, and exportable insights.",
-  solution:
-    "I built a Streamlit app that fetches Reddit JSON, combines paginated records, cleans text, creates word vectors, normalizes them, computes cosine similarity, labels pain-point themes, and presents the output as a productized analytics dashboard.",
-  features: [
-    "Reddit public JSON ingestion",
-    "Demo-data fallback for reliable portfolio demos",
-    "Uploaded Reddit JSON support",
-    "Two-phase text cleaning",
-    "Keyword usage tracker",
-    "Multi-keyword comparison",
-    "TF-IDF distinctive vocabulary",
-    "Cosine similarity recommendations",
-    "Similarity heatmap",
-    "NLP pipeline walkthrough",
-    "Pain-point theme classification",
-    "Exportable analyzed CSV",
-  ],
-  demonstrates:
-    "This project demonstrates API ingestion, JSON normalization, text preprocessing, vectorization, cosine similarity, lightweight NLP, product analytics, and dashboard design.",
-  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
-  talkTrack:
-    "This project turns a Reddit API and NLP coursework concept into a usable discussion-intelligence product. The value is not just pulling Reddit data; it is transforming messy text into pain-point themes, keyword signals, and similar-thread recommendations.",
-  demoUrl: "https://reddit-pulse-lab.streamlit.app/",
-  githubUrl: "https://github.com/siddhanths93/reddit-pulse-lab",
-},
 "supplier-risk-assessment": {
     title: "Supplier Risk Assessment",
     eyebrow: "Supply Chain Analytics · React",
@@ -172,6 +112,66 @@ const projects = {
     talkTrack:
       "This project helps frame tariff exposure as a scenario-modeling problem rather than a static cost calculation.",
   },
+    "world-cup-drama-lab": {
+  title: "World Cup Drama Lab",
+  eyebrow: "Sports Analytics · Streamlit · Automated Data Refresh",
+  description:
+    "A free-data World Cup storytelling app that turns match results into fan-friendly recaps, group-stage chaos, and qualification survival scenarios.",
+  problem:
+    "Most sports data apps either feel too statistical for casual fans or rely on official branding, paid data, player images, betting odds, or complex event-level analytics. I wanted to build something that made the tournament easier to follow using only lightweight public-style match data and a copyright-safe interface.",
+  solution:
+    "I built a standalone Streamlit app that reads local JSON match data, translates scores and standings into plain-English stories, generates match recap cards, explains group-stage chaos, and lets users simulate qualification scenarios. A GitHub Actions workflow refreshes match data hourly from football-data.org while the deployed app itself only reads committed local JSON.",
+  features: [
+    "Clickable match recap board",
+    "Fan-friendly match story summaries",
+    "Scoreline verdicts and match mood scoring",
+    "Group chaos explanations",
+    "Plain-English soccer explanations for beginners",
+    "Qualification survival cards",
+    "Interactive group-stage scenario simulator",
+    "Sidebar standings and finished match scores",
+    "Hourly GitHub Actions data refresh",
+    "Copyright-safe UI with no player photos, official crests, or FIFA artwork",
+  ],
+  demonstrates:
+    "This project demonstrates product thinking, sports analytics storytelling, Streamlit app development, automated data refresh design, lightweight data engineering, and copyright-safe portfolio product design.",
+  tags: ["Python", "Streamlit", "Sports Analytics", "GitHub Actions", "Data Storytelling"],
+  talkTrack:
+    "This project shows how a simple data product can turn raw match results into a more engaging fan experience. The focus is not advanced prediction or betting analytics — it is productizing data into recaps, explanations, and scenarios that a casual user can understand quickly.",
+  demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
+  githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
+},
+"reddit-pulse-lab": {
+  title: "Reddit Pulse Lab",
+  eyebrow: "Reddit API · NLP · Discussion Intelligence",
+  description:
+    "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, engagement patterns, and similar-thread recommendations.",
+  problem:
+    "Reddit contains valuable public discussion signals, but raw API responses are deeply nested, paginated, noisy, and hard to interpret directly. A user needs a clean way to turn posts into themes, keywords, related threads, and exportable insights.",
+  solution:
+    "I built a Streamlit app that fetches Reddit JSON, combines paginated records, cleans text, creates word vectors, normalizes them, computes cosine similarity, labels pain-point themes, and presents the output as a productized analytics dashboard.",
+  features: [
+    "Reddit public JSON ingestion",
+    "Demo-data fallback for reliable portfolio demos",
+    "Uploaded Reddit JSON support",
+    "Two-phase text cleaning",
+    "Keyword usage tracker",
+    "Multi-keyword comparison",
+    "TF-IDF distinctive vocabulary",
+    "Cosine similarity recommendations",
+    "Similarity heatmap",
+    "NLP pipeline walkthrough",
+    "Pain-point theme classification",
+    "Exportable analyzed CSV",
+  ],
+  demonstrates:
+    "This project demonstrates API ingestion, JSON normalization, text preprocessing, vectorization, cosine similarity, lightweight NLP, product analytics, and dashboard design.",
+  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+  talkTrack:
+    "This project turns a Reddit API and NLP coursework concept into a usable discussion-intelligence product. The value is not just pulling Reddit data; it is transforming messy text into pain-point themes, keyword signals, and similar-thread recommendations.",
+  demoUrl: "https://reddit-pulse-lab.streamlit.app/",
+  githubUrl: "https://github.com/siddhanths93/reddit-pulse-lab",
+},
   "ten-k-insight-agent": {
     title: "10-K Insight Agent",
     eyebrow: "AI · Document Analysis",
