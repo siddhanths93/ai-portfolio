@@ -71,6 +71,37 @@ const projects = {
   demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
   githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
 },
+"reddit-pulse-lab": {
+  title: "Reddit Pulse Lab",
+  eyebrow: "Reddit API · NLP · Discussion Intelligence",
+  description:
+    "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, engagement patterns, and similar-thread recommendations.",
+  problem:
+    "Reddit contains valuable public discussion signals, but raw API responses are deeply nested, paginated, noisy, and hard to interpret directly. A user needs a clean way to turn posts into themes, keywords, related threads, and exportable insights.",
+  solution:
+    "I built a Streamlit app that fetches Reddit JSON, combines paginated records, cleans text, creates word vectors, normalizes them, computes cosine similarity, labels pain-point themes, and presents the output as a productized analytics dashboard.",
+  features: [
+    "Reddit public JSON ingestion",
+    "Demo-data fallback for reliable portfolio demos",
+    "Uploaded Reddit JSON support",
+    "Two-phase text cleaning",
+    "Keyword usage tracker",
+    "Multi-keyword comparison",
+    "TF-IDF distinctive vocabulary",
+    "Cosine similarity recommendations",
+    "Similarity heatmap",
+    "NLP pipeline walkthrough",
+    "Pain-point theme classification",
+    "Exportable analyzed CSV",
+  ],
+  demonstrates:
+    "This project demonstrates API ingestion, JSON normalization, text preprocessing, vectorization, cosine similarity, lightweight NLP, product analytics, and dashboard design.",
+  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+  talkTrack:
+    "This project turns a Reddit API and NLP coursework concept into a usable discussion-intelligence product. The value is not just pulling Reddit data; it is transforming messy text into pain-point themes, keyword signals, and similar-thread recommendations.",
+  demoUrl: "https://reddit-pulse-lab.streamlit.app/",
+  githubUrl: "https://github.com/siddhanths93/reddit-pulse-lab",
+},
 "supplier-risk-assessment": {
     title: "Supplier Risk Assessment",
     eyebrow: "Supply Chain Analytics · React",
