@@ -3,6 +3,10 @@ import Navbar from "@/components/Navbar";
 
 const SUPPLIER_SPEND_APP_URL = "https://supplier-performance-briefing-5k3n38kxgqwe3g7n7q3tbf.streamlit.app/";
 
+{/* <div className="fixed top-20 left-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg">
+  TEST: World Cup deploy check
+</div> */}
+
 const focusAreas = [
   {
     title: "Decision Intelligence",
@@ -44,6 +48,14 @@ const projects = [
     featured: true,
   },
   {
+  title: "World Cup Drama Lab",
+  slug: "world-cup-drama-lab",
+  description: "A free-data World Cup storytelling app that turns match results into recaps, group chaos, and qualification scenarios.",
+  tags: ["Streamlit", "Python", "Sports Analytics", "GitHub Actions"],
+  // demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
+  // githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
+},
+{
     title: "Supplier Risk Assessment",
     slug: "supplier-risk-assessment",
     description:
@@ -66,8 +78,8 @@ const projects = [
     "A procurement data-quality tool that standardizes messy supplier names, detects duplicate vendor records, recommends supplier families, flags questionable matches for human review, and exports cleaner supplier data for spend analytics.",
   tags: ["Procurement", "Data Quality", "Fuzzy Matching", "Python", "Streamlit"],
   image: "/projects/supplier-normalization.png",
-  githubUrl: "https://github.com/YOUR_USERNAME/supplier-normalization-workbench",
-  demoUrl: "https://YOUR_STREAMLIT_APP_URL.streamlit.app",
+  githubUrl: "https://github.com/siddhanths93/supplier-normalization-workbench",
+  demoUrl: "https://supplier-normalization-workbench.streamlit.app/",
 },
 {
     title: "10-K Insight Agent",
