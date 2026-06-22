@@ -48,6 +48,16 @@ const projects = [
     ],
     featured: true,
   },
+  {
+  title: "Supplier Normalization Workbench",
+  slug: "supplier-normalization-workbench",
+  description:
+    "A procurement data-quality tool that standardizes messy supplier names, detects duplicate vendor records, recommends supplier families, flags questionable matches for human review, and exports cleaner supplier data for spend analytics.",
+  tags: ["Procurement", "Data Quality", "Fuzzy Matching", "Python", "Streamlit"],
+  image: "/projects/supplier-normalization.png",
+  githubUrl: "https://github.com/siddhanths93/supplier-normalization-workbench",
+  demoUrl: "https://supplier-normalization-workbench.streamlit.app/",
+},
 {
     title: "Supplier Risk Assessment",
     slug: "supplier-risk-assessment",
@@ -64,16 +74,6 @@ const projects = [
     tags: ["React", "Trade Analytics", "Scenario Modeling", "Tariffs"],
     featured: false,
   },
-  {
-  title: "Supplier Normalization Workbench",
-  slug: "supplier-normalization-workbench",
-  description:
-    "A procurement data-quality tool that standardizes messy supplier names, detects duplicate vendor records, recommends supplier families, flags questionable matches for human review, and exports cleaner supplier data for spend analytics.",
-  tags: ["Procurement", "Data Quality", "Fuzzy Matching", "Python", "Streamlit"],
-  image: "/projects/supplier-normalization.png",
-  githubUrl: "https://github.com/siddhanths93/supplier-normalization-workbench",
-  demoUrl: "https://supplier-normalization-workbench.streamlit.app/",
-},
   {
   title: "World Cup Drama Lab",
   slug: "world-cup-drama-lab",
