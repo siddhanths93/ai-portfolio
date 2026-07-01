@@ -1,676 +1,295 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DECADES, DECADE_ORDER, type DecadeKey } from "@/components/musicEras";
 
-type SongGroup = "Start Here" | "Shaped the Sound" | "Curator Picks";
 
-type EraSong = {
-  title: string;
-  artist: string;
-  year: number | string;
-  group: SongGroup;
-  genre: string;
-  moods: string[];
-  note: string;
-};
+type SongTier = "hit" | "defining" | "deepcut";
+type ActiveTab = "Enter the Era" | "Modern Match" | "The Songs";
 
-type CulturalMoment = {
-  title: string;
-  text: string;
-};
+const tabs: ActiveTab[] = ["Enter the Era", "Modern Match", "The Songs"];
 
-type ThenNowBridge = {
-  thenArtist: string;
-  nowArtist: string;
-  bridgeLine: string;
-  reason: string;
-  tags: string[];
-};
-
-type MusicEra = {
-  id: string;
-  decade: string;
-  years: string;
-  tagline: string;
-  colorTheme: {
-  name: string;
-  texture: string;
-  from: string;
-  via: string;
-  to: string;
-  accent: string;
-};
-  genres: string[];
-  heroSummary: string;
-  songs: EraSong[];
-  culturalMoments: CulturalMoment[];
-  thenNowBridges: ThenNowBridge[];
-  definingAlbum: {
-    title: string;
-    artist: string;
-    year: number | string;
-    note: string;
-  };
-  shareCard: {
-    headline: string;
-    sound: string[];
-    songs: string[];
-    vibe: string;
-  };
-};
-
-const musicEras: MusicEra[] = [
-  {
-    id: "1970s",
-    decade: "1970s",
-    years: "1970–1979",
-    tagline: "Disco lights, arena rock, punk attitude, and soul power.",
-    colorTheme: {
-      name: "Vinyl Gold",
-      texture: "Disco ball reflections, vinyl sleeves, warm film grain",
-      from: "#2a1600",
-      via: "#7c2d12",
-      to: "#facc15",
-      accent: "#facc15",
-    },
-    genres: [
-      "Disco",
-      "Funk",
-      "Soul",
-      "Punk",
-      "Classic Rock",
-      "Singer-Songwriter",
-      "Reggae",
-      "Early Electronic",
-    ],
-    heroSummary:
-      "The 70s were loud, stylish, rebellious, and deeply musical. Disco took over dance floors, funk made rhythm the star, punk rejected polish, and classic rock filled arenas. It was a decade where music scenes felt physical: clubs, vinyl records, radio, and live concerts shaped the culture.",
-    songs: [
-      {
-        title: "Stayin' Alive",
-        artist: "Bee Gees",
-        year: 1977,
-        group: "Start Here",
-        genre: "Disco",
-        moods: ["iconic", "dancefloor", "swagger"],
-        note: "One of the defining disco records of the decade.",
-      },
-      {
-        title: "Superstition",
-        artist: "Stevie Wonder",
-        year: 1972,
-        group: "Start Here",
-        genre: "Funk / Soul",
-        moods: ["groovy", "sharp", "timeless"],
-        note: "A perfect mix of funk rhythm, soul vocals, and unforgettable keyboard riffs.",
-      },
-      {
-        title: "Hotel California",
-        artist: "Eagles",
-        year: 1976,
-        group: "Start Here",
-        genre: "Classic Rock",
-        moods: ["cinematic", "mysterious", "sunset"],
-        note: "A polished, mythic rock song that still defines 70s radio nostalgia.",
-      },
-      {
-        title: "Blitzkrieg Bop",
-        artist: "Ramones",
-        year: 1976,
-        group: "Shaped the Sound",
-        genre: "Punk",
-        moods: ["fast", "raw", "rebellious"],
-        note: "A punk blueprint: short, loud, simple, and impossible to ignore.",
-      },
-      {
-        title: "I Feel Love",
-        artist: "Donna Summer",
-        year: 1977,
-        group: "Shaped the Sound",
-        genre: "Electronic Disco",
-        moods: ["futuristic", "hypnotic", "sleek"],
-        note: "A futuristic dance record that pointed toward electronic music’s future.",
-      },
-      {
-        title: "Marquee Moon",
-        artist: "Television",
-        year: 1977,
-        group: "Curator Picks",
-        genre: "Art Punk",
-        moods: ["angular", "cool", "downtown"],
-        note: "A cult classic from the New York art-punk scene.",
-      },
-    ],
-    culturalMoments: [
-      {
-        title: "Disco became a lifestyle",
-        text: "Clubs, fashion, nightlife, and dance culture helped disco become more than a genre.",
-      },
-      {
-        title: "Punk rejected polish",
-        text: "Punk bands made music feel raw, fast, political, and accessible.",
-      },
-      {
-        title: "Arena rock got huge",
-        text: "Rock bands turned concerts into massive shared experiences.",
-      },
-      {
-        title: "Vinyl defined discovery",
-        text: "Album art, record stores, and full-length listening shaped how fans experienced music.",
-      },
-    ],
-    thenNowBridges: [
-      {
-        thenArtist: "Stevie Wonder",
-        nowArtist: "Anderson .Paak",
-        bridgeLine: "Soul, groove, musicianship, and joy.",
-        reason:
-          "Both make rhythm feel alive while blending soul, funk, pop, and personality.",
-        tags: ["soul", "funk", "groove", "musicianship"],
-      },
-      {
-        thenArtist: "Donna Summer",
-        nowArtist: "Dua Lipa",
-        bridgeLine: "Dance-pop built for the lights.",
-        reason:
-          "Both channel disco energy into sleek, stylish pop built around movement.",
-        tags: ["disco", "dance-pop", "glossy", "nightlife"],
-      },
-    ],
-    definingAlbum: {
-      title: "Songs in the Key of Life",
-      artist: "Stevie Wonder",
-      year: 1976,
-      note: "A massive, joyful, and ambitious album that captured the musical range of the decade.",
-    },
-    shareCard: {
-      headline: "My music era is the 1970s",
-      sound: ["Disco", "Funk", "Soul", "Punk", "Classic Rock"],
-      songs: ["Stayin' Alive", "Superstition", "Hotel California"],
-      vibe: "Vinyl records, disco balls, arena shows, punk clubs, and golden-hour guitar solos.",
-    },
-  },
-
-  {
-    id: "1980s",
-    decade: "1980s",
-    years: "1980–1989",
-    tagline: "Synths, neon, MTV, stadium pop, and larger-than-life icons.",
-    colorTheme: {
-      name: "Neon Chrome",
-      texture: "VHS glow, arcade lights, leather jackets, synth grids",
-      from: "#111827",
-      via: "#7e22ce",
-      to: "#06b6d4",
-      accent: "#22d3ee",
-    },
-    genres: [
-      "Synth-Pop",
-      "New Wave",
-      "Pop",
-      "Hair Metal",
-      "Hip-Hop",
-      "Post-Punk",
-      "R&B",
-      "Dance",
-    ],
-    heroSummary:
-      "The 80s made music visual. MTV turned artists into icons, synthesizers changed pop forever, hip-hop grew from a movement into a force, and stadium-sized choruses became the sound of ambition. Everything felt brighter, bigger, and more dramatic.",
-    songs: [
-      {
-        title: "Billie Jean",
-        artist: "Michael Jackson",
-        year: 1982,
-        group: "Start Here",
-        genre: "Pop / R&B",
-        moods: ["sleek", "iconic", "moonwalk"],
-        note: "A perfect pop record and one of the most recognizable basslines ever.",
-      },
-      {
-        title: "Like a Virgin",
-        artist: "Madonna",
-        year: 1984,
-        group: "Start Here",
-        genre: "Pop",
-        moods: ["provocative", "glossy", "star-making"],
-        note: "A defining moment in the rise of Madonna as a pop-cultural force.",
-      },
-      {
-        title: "Sweet Child O' Mine",
-        artist: "Guns N' Roses",
-        year: 1987,
-        group: "Start Here",
-        genre: "Rock",
-        moods: ["anthemic", "romantic", "guitar hero"],
-        note: "One of the decade’s most famous rock anthems.",
-      },
-      {
-        title: "Blue Monday",
-        artist: "New Order",
-        year: 1983,
-        group: "Shaped the Sound",
-        genre: "Synth-Pop / Dance",
-        moods: ["mechanical", "cool", "club"],
-        note: "A bridge between post-punk, dance music, and electronic pop.",
-      },
-      {
-        title: "The Message",
-        artist: "Grandmaster Flash & The Furious Five",
-        year: 1982,
-        group: "Shaped the Sound",
-        genre: "Hip-Hop",
-        moods: ["street-level", "serious", "historic"],
-        note: "A landmark hip-hop record that showed rap could be social commentary.",
-      },
-      {
-        title: "Running Up That Hill",
-        artist: "Kate Bush",
-        year: 1985,
-        group: "Curator Picks",
-        genre: "Art Pop",
-        moods: ["dramatic", "strange", "emotional"],
-        note: "An art-pop masterpiece that still sounds futuristic.",
-      },
-    ],
-    culturalMoments: [
-      {
-        title: "MTV changed everything",
-        text: "Music videos became central to stardom. Image, choreography, fashion, and storytelling became part of the song.",
-      },
-      {
-        title: "Pop stars became global icons",
-        text: "Michael Jackson, Madonna, Prince, and others turned pop into worldwide spectacle.",
-      },
-      {
-        title: "Synths took over",
-        text: "Electronic textures moved from experimental edges into the center of mainstream pop.",
-      },
-      {
-        title: "Hip-hop found its voice",
-        text: "The decade helped move hip-hop from block parties toward national cultural influence.",
-      },
-    ],
-    thenNowBridges: [
-      {
-        thenArtist: "Madonna",
-        nowArtist: "Lady Gaga",
-        bridgeLine: "Pop as image, performance, and reinvention.",
-        reason:
-          "Both understand pop as a full visual and cultural universe, not just songs.",
-        tags: ["pop", "performance", "reinvention", "visual"],
-      },
-      {
-        thenArtist: "Kate Bush",
-        nowArtist: "Florence + The Machine",
-        bridgeLine: "Theatrical emotion and art-pop drama.",
-        reason:
-          "Both make pop feel mystical, emotional, and larger than ordinary life.",
-        tags: ["art-pop", "dramatic", "emotional", "theatrical"],
-      },
-    ],
-    definingAlbum: {
-      title: "Thriller",
-      artist: "Michael Jackson",
-      year: 1982,
-      note: "The blockbuster album that turned pop into a global multimedia event.",
-    },
-    shareCard: {
-      headline: "My music era is the 1980s",
-      sound: ["Synth-Pop", "New Wave", "Pop", "Rock", "Early Hip-Hop"],
-      songs: ["Billie Jean", "Like a Virgin", "Blue Monday"],
-      vibe: "MTV premieres, neon lights, cassette tapes, dance floors, and giant choruses.",
-    },
-  },
-
-  {
-    id: "1990s",
-    decade: "1990s",
-    years: "1990–1999",
-    tagline: "The last decade before the internet changed everything.",
-    colorTheme: {
-      name: "MTV Static",
-      texture: "CD reflections, magazine collage, VHS static",
-      from: "#020617",
-      via: "#312e81",
-      to: "#0891b2",
-      accent: "#67e8f9",
-    },
-    genres: [
-      "Grunge / Alternative Rock",
-      "Golden Age Hip-Hop",
-      "R&B / Neo-Soul",
-      "Britpop",
-      "TRL Pop",
-      "Electronic / Trip-Hop",
-      "Country Crossover",
-      "Latin Pop",
-    ],
-    heroSummary:
-      "The 90s were the last great pre-streaming decade: CDs, MTV, radio, movie soundtracks, and early internet chaos shaped what everyone heard. Grunge made rock raw again, hip-hop became a dominant cultural force, R&B entered a golden age, and teen pop exploded by the end of the decade.",
-    songs: [
-      {
-        title: "Smells Like Teen Spirit",
-        artist: "Nirvana",
-        year: 1991,
-        group: "Start Here",
-        genre: "Grunge",
-        moods: ["generational explosion", "teen angst", "raw"],
-        note: "The song that made grunge feel like a global youth movement.",
-      },
-      {
-        title: "...Baby One More Time",
-        artist: "Britney Spears",
-        year: 1998,
-        group: "Start Here",
-        genre: "Pop",
-        moods: ["teen pop peak", "glossy", "TRL queen"],
-        note: "The song that announced the late-90s teen pop takeover.",
-      },
-      {
-        title: "Waterfalls",
-        artist: "TLC",
-        year: 1995,
-        group: "Start Here",
-        genre: "R&B",
-        moods: ["cautionary", "lush", "socially conscious"],
-        note: "A smooth R&B-pop classic with a serious message and unforgettable video.",
-      },
-      {
-        title: "Wonderwall",
-        artist: "Oasis",
-        year: 1995,
-        group: "Start Here",
-        genre: "Britpop",
-        moods: ["romantic", "singalong", "nostalgic"],
-        note: "The Britpop anthem that became a global shorthand for 90s guitar nostalgia.",
-      },
-      {
-        title: "No Scrubs",
-        artist: "TLC",
-        year: 1999,
-        group: "Start Here",
-        genre: "R&B",
-        moods: ["sharp", "unapologetic", "attitude"],
-        note: "A late-90s R&B anthem that turned rejection into a cultural catchphrase.",
-      },
-      {
-        title: "California Love",
-        artist: "2Pac ft. Dr. Dre",
-        year: 1995,
-        group: "Shaped the Sound",
-        genre: "West Coast Hip-Hop",
-        moods: ["party anthem", "sunset drive", "swagger"],
-        note: "A West Coast anthem that captured hip-hop’s mainstream dominance.",
-      },
-      {
-        title: "Doo Wop (That Thing)",
-        artist: "Lauryn Hill",
-        year: 1998,
-        group: "Shaped the Sound",
-        genre: "Neo-Soul / Hip-Hop",
-        moods: ["sharp", "beautiful", "wise"],
-        note: "A brilliant fusion of hip-hop, soul, and moral clarity from one of the decade’s defining voices.",
-      },
-      {
-        title: "Say My Name",
-        artist: "Destiny's Child",
-        year: 1999,
-        group: "Shaped the Sound",
-        genre: "R&B",
-        moods: ["suspicious", "flawless", "cool"],
-        note: "A precise, futuristic R&B record that pointed directly toward the 2000s.",
-      },
-      {
-        title: "Unfinished Sympathy",
-        artist: "Massive Attack",
-        year: 1991,
-        group: "Shaped the Sound",
-        genre: "Trip-Hop",
-        moods: ["cinematic", "weightless", "haunting"],
-        note: "A defining trip-hop song that made electronic music feel soulful and widescreen.",
-      },
-      {
-        title: "Nuthin' But a G Thang",
-        artist: "Dr. Dre ft. Snoop Dogg",
-        year: 1992,
-        group: "Shaped the Sound",
-        genre: "G-Funk",
-        moods: ["laid-back", "cool", "cruising"],
-        note: "A smooth West Coast blueprint that shaped early-90s hip-hop.",
-      },
-      {
-        title: "Creep",
-        artist: "Radiohead",
-        year: 1992,
-        group: "Curator Picks",
-        genre: "Alternative Rock",
-        moods: ["self-loathing", "universal", "explosive"],
-        note: "A misfit anthem that turned alienation into a stadium-sized chorus.",
-      },
-      {
-        title: "Brown Sugar",
-        artist: "D'Angelo",
-        year: 1995,
-        group: "Curator Picks",
-        genre: "Neo-Soul",
-        moods: ["warm", "sensual", "smoky"],
-        note: "A key neo-soul record that made R&B feel organic, intimate, and deeply cool.",
-      },
-      {
-        title: "Fade Into You",
-        artist: "Mazzy Star",
-        year: 1993,
-        group: "Curator Picks",
-        genre: "Dream Pop",
-        moods: ["hazy", "romantic", "late night"],
-        note: "A dream-pop classic that became the sound of quiet longing.",
-      },
-      {
-        title: "Can I Kick It?",
-        artist: "A Tribe Called Quest",
-        year: 1990,
-        group: "Curator Picks",
-        genre: "Jazz Rap",
-        moods: ["cool", "playful", "laid-back"],
-        note: "An early-90s hip-hop classic with effortless cool and jazz-soaked charm.",
-      },
-      {
-        title: "Rebel Girl",
-        artist: "Bikini Kill",
-        year: 1993,
-        group: "Curator Picks",
-        genre: "Riot Grrrl / Punk",
-        moods: ["fierce", "DIY", "feminist"],
-        note: "A riot grrrl anthem that captured the decade’s underground feminist punk energy.",
-      },
-    ],
-    culturalMoments: [
-      {
-        title: "The CD store was a cultural institution",
-        text: "Tower Records, HMV, and Virgin Megastore turned music discovery into a physical ritual. Cover art, liner notes, and staff recommendations all mattered.",
-      },
-      {
-        title: "TRL made pop stars in real time",
-        text: "MTV’s Total Request Live turned music videos into daily teen culture. Pop stars were not just heard — they were watched, voted for, screamed over, and made iconic on TV.",
-      },
-      {
-        title: "Napster broke everything",
-        text: "By the end of the decade, file sharing made music feel unlimited and free. The industry panicked, teenagers adapted instantly, and the business never fully went back.",
-      },
-      {
-        title: "Hip-hop became the dominant American art form",
-        text: "By the late 90s, hip-hop was no longer outside the mainstream. Biggie, Tupac, Lauryn Hill, Jay-Z, Eminem, Missy Elliott, and others made rap the center of cultural gravity.",
-      },
-    ],
-    thenNowBridges: [
-      {
-        thenArtist: "Lauryn Hill",
-        nowArtist: "SZA",
-        bridgeLine: "Neo-soul mastery and emotional honesty.",
-        reason:
-          "Both turn vulnerability into power, blending R&B, hip-hop influence, and intimate writing.",
-        tags: ["neo-soul", "R&B", "vulnerability", "genre-blending"],
-      },
-      {
-        thenArtist: "Nirvana",
-        nowArtist: "Wet Leg",
-        bridgeLine: "Guitar energy, irony, and anti-polished cool.",
-        reason:
-          "Both make guitar music feel messy, funny, detached, and alive instead of overly polished.",
-        tags: ["guitar energy", "alt-rock", "irony", "raw"],
-      },
-      {
-        thenArtist: "Missy Elliott",
-        nowArtist: "Doja Cat",
-        bridgeLine: "Genre-bending hip-hop and visual creativity.",
-        reason:
-          "Both understand that sound, image, humor, and weirdness can all be part of the same pop package.",
-        tags: ["hip-hop", "visual", "playful", "genre-bending"],
-      },
-      {
-        thenArtist: "Radiohead",
-        nowArtist: "Bon Iver",
-        bridgeLine: "Emotional weight and sonic experimentation.",
-        reason:
-          "Both make sadness sound expansive, experimental, and oddly beautiful.",
-        tags: ["experimental", "melancholy", "alternative", "texture"],
-      },
-      {
-        thenArtist: "D'Angelo",
-        nowArtist: "Frank Ocean",
-        bridgeLine: "Neo-soul and vulnerability as strength.",
-        reason:
-          "Both make R&B feel human, spacious, sensual, and emotionally complex.",
-        tags: ["neo-soul", "R&B", "vulnerability", "intimate"],
-      },
-    ],
-    definingAlbum: {
-      title: "The Miseducation of Lauryn Hill",
-      artist: "Lauryn Hill",
-      year: 1998,
-      note: "A landmark fusion of hip-hop, soul, reggae, and gospel that still feels emotionally direct and modern.",
-    },
-    shareCard: {
-      headline: "My music era is the 1990s",
-      sound: ["Grunge", "Hip-hop", "R&B", "Britpop", "Trip-hop"],
-      songs: ["Smells Like Teen Spirit", "Waterfalls", "No Scrubs"],
-      vibe: "CD stores, MTV, movie soundtracks, Napster, and the last pre-streaming monoculture.",
-    },
-  },
+const songFilters: Array<"all" | SongTier> = [
+  "all",
+  "hit",
+  "defining",
+  "deepcut",
 ];
 
-const tabs = ["Enter the Era", "Modern Match", "The Songs"] as const;
-type Tab = (typeof tabs)[number];
+const songFilterLabels: Record<"all" | SongTier, string> = {
+  all: "All Songs",
+  hit: "Start Here",
+  defining: "Shaped the Sound",
+  deepcut: "Curator Picks",
+};
 
-const songFilters: Array<"All" | SongGroup> = [
-  "All",
-  "Start Here",
-  "Shaped the Sound",
-  "Curator Picks",
-];
+const genreBuckets = [
+  "all",
+  "pop",
+  "rock",
+  "hiphop",
+  "rnb",
+  "electronic",
+  "indie",
+  "global",
+] as const;
+
+type GenreBucket = (typeof genreBuckets)[number];
+
+const genreBucketLabels: Record<GenreBucket, string> = {
+  all: "All Genres",
+  pop: "Pop",
+  rock: "Rock / Alternative",
+  hiphop: "Hip-Hop / Rap",
+  rnb: "R&B / Soul",
+  electronic: "Electronic / Dance",
+  indie: "Indie / Folk",
+  global: "Latin / Global",
+};
+
+function getGenreBucket(genre: string): GenreBucket {
+  const g = genre.toLowerCase();
+
+  if (
+    g.includes("hip-hop") ||
+    g.includes("hip hop") ||
+    g.includes("rap") ||
+    g.includes("trap") ||
+    g.includes("g-funk")
+  ) {
+    return "hiphop";
+  }
+
+  if (
+    g.includes("r&b") ||
+    g.includes("soul") ||
+    g.includes("funk") ||
+    g.includes("neo-soul")
+  ) {
+    return "rnb";
+  }
+
+  if (
+    g.includes("rock") ||
+    g.includes("grunge") ||
+    g.includes("alternative") ||
+    g.includes("punk") ||
+    g.includes("metal") ||
+    g.includes("britpop") ||
+    g.includes("new wave") ||
+    g.includes("post-punk")
+  ) {
+    return "rock";
+  }
+
+  if (
+    g.includes("electronic") ||
+    g.includes("dance") ||
+    g.includes("disco") ||
+    g.includes("edm") ||
+    g.includes("synth") ||
+    g.includes("trip-hop")
+  ) {
+    return "electronic";
+  }
+
+  if (
+    g.includes("indie") ||
+    g.includes("folk") ||
+    g.includes("singer-songwriter") ||
+    g.includes("acoustic")
+  ) {
+    return "indie";
+  }
+
+  if (
+    g.includes("latin") ||
+    g.includes("afro") ||
+    g.includes("afrobeats") ||
+    g.includes("reggae") ||
+    g.includes("regional mexican") ||
+    g.includes("k-pop") ||
+    g.includes("country")
+  ) {
+    return "global";
+  }
+
+  return "pop";
+}
 
 export default function MusicEraTimeMachine() {
-  const [selectedEraId, setSelectedEraId] = useState("1990s");
-  const [activeTab, setActiveTab] = useState<Tab>("Enter the Era");
-  const [songFilter, setSongFilter] = useState<"All" | SongGroup>("All");
+  const [selectedDecade, setSelectedDecade] = useState<DecadeKey>("1990s");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("Enter the Era");
+  const [songFilter, setSongFilter] = useState<"all" | SongTier>("all");
+  const [genreFilter, setGenreFilter] = useState<GenreBucket>("all");
+  const [bridgeIndex, setBridgeIndex] = useState(0);
 
-  const selectedEra = useMemo(() => {
-    return musicEras.find((era) => era.id === selectedEraId) ?? musicEras[0];
-  }, [selectedEraId]);
+  const selectedEra = DECADES[selectedDecade];
 
-  const visibleSongs =
-    songFilter === "All"
-      ? selectedEra.songs
-      : selectedEra.songs.filter((song) => song.group === songFilter);
+  const genreOptions = useMemo(() => {
+  const bucketsInEra = selectedEra.songs.map((song) =>
+    getGenreBucket(song.genre)
+  );
+
+  return genreBuckets.filter(
+    (bucket) => bucket === "all" || bucketsInEra.includes(bucket)
+  );
+  }, [selectedEra]);
+
+  const visibleSongs = useMemo(() => {
+    return selectedEra.songs.filter((song) => {
+      const matchesTier = songFilter === "all" || song.tier === songFilter;
+      const matchesGenre = genreFilter === "all" || getGenreBucket(song.genre) === genreFilter;
+
+      return matchesTier && matchesGenre;
+    });
+  }, [selectedEra, songFilter, genreFilter]);
+
+  const activeBridge =
+    selectedEra.bridges[bridgeIndex % selectedEra.bridges.length];
 
   return (
     <section
-      className="mt-8 overflow-hidden rounded-3xl border border-white/15 text-white shadow-2xl transition-all duration-500"
+      className="mt-8 overflow-hidden rounded-3xl border text-white shadow-2xl transition-all duration-500"
       style={{
-        background: `linear-gradient(135deg, ${selectedEra.colorTheme.from}, ${selectedEra.colorTheme.via}, ${selectedEra.colorTheme.to})`,
+        background: selectedEra.theme.gradient,
+        borderColor: selectedEra.theme.accentBorder,
+        color: selectedEra.theme.text,
+        fontFamily: selectedEra.theme.font,
       }}
     >
-      <div className="relative overflow-hidden px-6 py-12 md:px-10">
+      <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-12">
         <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(90deg,#fff_1px,transparent_1px),linear-gradient(#fff_1px,transparent_1px)] bg-[size:48px_48px]" />
 
         <div className="relative">
-
-          <h2 className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
-            Music Era Time Machine
-          </h2>
-
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">
-            Pick a decade. Step into its sound, style, and cultural moment —
-            then discover your modern music match.
-          </p>
-
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
-            {musicEras.map((era) => (
-              <button
-                key={era.id}
-                onClick={() => {
-                  setSelectedEraId(era.id);
-                  setActiveTab("Enter the Era");
-                  setSongFilter("All");
-                }}
-                style={
-                  selectedEra.id === era.id
-                    ? {
-                        borderColor: selectedEra.colorTheme.accent,
-                        boxShadow: `0 20px 45px ${selectedEra.colorTheme.accent}33`,
-                      }
-                    : undefined
-                }
-                className={`rounded-3xl border p-5 text-left transition ${
-                  selectedEra.id === era.id
-                    ? "border-cyan-300 bg-white text-black shadow-2xl shadow-cyan-500/20"
-                    : "border-white/15 bg-white/5 hover:bg-white/10"
-                }`}
+          <div
+            className="rounded-[2rem] border p-7 md:p-10"
+            style={{
+              background: selectedEra.theme.heroGradient,
+              borderColor: selectedEra.theme.accentBorder,
+            }}
+          >
+            <div>
+              <p
+                className="text-sm font-semibold uppercase tracking-[0.35em]"
+                style={{ color: selectedEra.theme.accent }}
               >
-                <div className="text-2xl font-black">{era.decade}</div>
-                <div
-                  className={`mt-2 text-xs leading-5 ${
-                    selectedEra.id === era.id ? "text-black/70" : "text-white/60"
-                  }`}
-                >
-                  {era.tagline}
-                </div>
-              </button>
-            ))}
-          </div>
+                Music Era Time Machine
+              </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                style={
-                  activeTab === tab
-                    ? { backgroundColor: selectedEra.colorTheme.accent }
-                    : undefined
-                }
-                className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
-                  activeTab === tab
-                    ? "text-black"
-                    : "bg-white/10 text-white/75 hover:bg-white/15"
-                }`}
+              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
+                {selectedEra.era.headline}
+              </h2>
+
+              <p className="mt-4 max-w-3xl text-xl font-semibold leading-8">
+                {selectedEra.era.subline}
+              </p>
+
+              <p
+                className="mt-5 max-w-4xl text-lg leading-8"
+                style={{ color: selectedEra.theme.text }}
               >
-                {tab}
-              </button>
-            ))}
+                {selectedEra.era.description}
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+              {DECADE_ORDER.map((decade) => {
+                const decadeData = DECADES[decade];
+                const isSelected = selectedDecade === decade;
+
+                return (
+                  <button
+                    key={decade}
+                    onClick={() => {
+                      setSelectedDecade(decade);
+                      setActiveTab("Enter the Era");
+                      setSongFilter("all");
+                      setGenreFilter("all");
+                      setBridgeIndex(0);
+                    }}
+                    className="rounded-3xl border p-5 text-left transition hover:-translate-y-1"
+                    style={{
+                      backgroundColor: isSelected
+                        ? selectedEra.theme.accent
+                        : "rgba(255,255,255,0.06)",
+                      borderColor: isSelected
+                        ? selectedEra.theme.accent
+                        : "rgba(255,255,255,0.14)",
+                      color: isSelected
+                        ? selectedEra.theme.bg
+                        : selectedEra.theme.text,
+                      boxShadow: isSelected
+                        ? `0 20px 45px ${selectedEra.theme.accent}33`
+                        : "none",
+                    }}
+                  >
+                    <div className="text-2xl font-black">
+                      {decadeData.decade}
+                    </div>
+
+                    <div
+                      className="mt-2 text-xs leading-5"
+                      style={{
+                        color: isSelected
+                          ? selectedEra.theme.bg
+                          : selectedEra.theme.textMuted,
+                      }}
+                    >
+                      {decadeData.tagline}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {tabs.map((tab) => {
+                const isSelected = activeTab === tab;
+
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className="rounded-full px-5 py-3 text-sm font-semibold transition"
+                    style={{
+                      backgroundColor: isSelected
+                        ? selectedEra.theme.accent
+                        : "rgba(255,255,255,0.1)",
+                      color: isSelected
+                        ? selectedEra.theme.bg
+                        : selectedEra.theme.text,
+                    }}
+                  >
+                    {tab}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="px-6 pb-12 md:px-10">
         {activeTab === "Enter the Era" && <EnterEra era={selectedEra} />}
-        {activeTab === "Modern Match" && <ModernMatch era={selectedEra} />}
+
+        {activeTab === "Modern Match" && (
+          <ModernMatch
+            era={selectedEra}
+            activeBridge={activeBridge}
+            onNextBridge={() => setBridgeIndex((current) => current + 1)}
+          />
+        )}
+
         {activeTab === "The Songs" && (
           <TheSongs
             era={selectedEra}
+            visibleSongs={visibleSongs}
             songFilter={songFilter}
             setSongFilter={setSongFilter}
-            visibleSongs={visibleSongs}
+            genreFilter={genreFilter}
+            setGenreFilter={setGenreFilter}
+            genreOptions={genreOptions}
           />
         )}
       </div>
@@ -678,29 +297,39 @@ export default function MusicEraTimeMachine() {
   );
 }
 
-function EnterEra({ era }: { era: MusicEra }) {
+function EnterEra({ era }: { era: (typeof DECADES)[DecadeKey] }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+      <div
+        className="rounded-[2rem] border p-8"
+        style={{
+          backgroundColor: era.theme.bgCard,
+          borderColor: era.theme.accentBorder,
+        }}
+      >
+        <p
+          className="text-sm font-semibold uppercase tracking-[0.3em]"
+          style={{ color: era.theme.accent }}
+        >
           Enter the Era
         </p>
 
-        <h3 className="mt-4 text-5xl font-black">{era.decade}</h3>
+        <h3 className="mt-4 text-4xl font-black md:text-5xl">
+          {era.decade}
+        </h3>
 
-        <p className="mt-4 text-2xl font-semibold text-white/90">
-          {era.tagline}
-        </p>
-
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-white/70">
-          {era.heroSummary}
-        </p>
+        <p className="mt-4 text-2xl font-semibold">{era.tagline}</p>
 
         <div className="mt-8 flex flex-wrap gap-3">
           {era.genres.map((genre) => (
             <span
               key={genre}
-              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80"
+              className="rounded-full border px-4 py-2 text-sm"
+              style={{
+                backgroundColor: era.theme.accentDim,
+                borderColor: era.theme.accentBorder,
+                color: era.theme.text,
+              }}
             >
               {genre}
             </span>
@@ -708,18 +337,29 @@ function EnterEra({ era }: { era: MusicEra }) {
         </div>
       </div>
 
-      <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.25em] text-pink-300">
+      <div
+        className="rounded-[2rem] border p-8"
+        style={{
+          backgroundColor: era.theme.bgCard,
+          borderColor: era.theme.accentBorder,
+        }}
+      >
+        <p
+          className="text-sm font-semibold uppercase tracking-[0.25em]"
+          style={{ color: era.theme.accent }}
+        >
           Defining Album
         </p>
 
-        <h3 className="mt-4 text-3xl font-black">{era.definingAlbum.title}</h3>
+        <h3 className="mt-4 text-3xl font-black">
+          {era.definingAlbum.title}
+        </h3>
 
-        <p className="mt-2 text-white/70">
+        <p className="mt-2" style={{ color: era.theme.textMuted }}>
           {era.definingAlbum.artist}, {era.definingAlbum.year}
         </p>
 
-        <p className="mt-5 leading-7 text-white/70">{era.definingAlbum.note}</p>
+        <p className="mt-5 leading-7">{era.definingAlbum.why}</p>
       </div>
 
       <div className="lg:col-span-2">
@@ -729,10 +369,19 @@ function EnterEra({ era }: { era: MusicEra }) {
           {era.culturalMoments.map((moment) => (
             <div
               key={moment.title}
-              className="rounded-3xl border border-white/10 bg-white/[0.05] p-6"
+              className="rounded-3xl border p-6"
+              style={{
+                backgroundColor: era.theme.bgCard,
+                borderColor: era.theme.accentBorder,
+              }}
             >
               <h4 className="text-xl font-bold">{moment.title}</h4>
-              <p className="mt-3 leading-7 text-white/65">{moment.text}</p>
+              <p
+                className="mt-3 leading-7"
+                style={{ color: era.theme.textMuted }}
+              >
+                {moment.body}
+              </p>
             </div>
           ))}
         </div>
@@ -743,14 +392,28 @@ function EnterEra({ era }: { era: MusicEra }) {
   );
 }
 
-function ModernMatch({ era }: { era: MusicEra }) {
-  const [index, setIndex] = useState(0);
-  const featured = era.thenNowBridges[index % era.thenNowBridges.length];
-
+function ModernMatch({
+  era,
+  activeBridge,
+  onNextBridge,
+}: {
+  era: (typeof DECADES)[DecadeKey];
+  activeBridge: (typeof DECADES)[DecadeKey]["bridges"][number];
+  onNextBridge: () => void;
+}) {
   return (
     <div>
-      <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+      <div
+        className="rounded-[2rem] border p-8"
+        style={{
+          backgroundColor: era.theme.bgCard,
+          borderColor: era.theme.accentBorder,
+        }}
+      >
+        <p
+          className="text-sm font-semibold uppercase tracking-[0.3em]"
+          style={{ color: era.theme.accent }}
+        >
           Modern Match
         </p>
 
@@ -759,61 +422,80 @@ function ModernMatch({ era }: { era: MusicEra }) {
         </h3>
 
         <div className="mt-8 grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-center">
-          <div className="rounded-3xl bg-black/35 p-6">
-            <p className="text-sm uppercase tracking-[0.25em] text-white/45">
+          <div
+            className="rounded-3xl border p-6"
+            style={{
+              backgroundColor: "rgba(0,0,0,0.25)",
+              borderColor: era.theme.accentBorder,
+            }}
+          >
+            <p
+              className="text-sm uppercase tracking-[0.25em]"
+              style={{ color: era.theme.textMuted }}
+            >
               Then
             </p>
-            <h4 className="mt-3 text-3xl font-black">{featured.thenArtist}</h4>
+            <h4 className="mt-3 text-3xl font-black">
+              {activeBridge.then}
+            </h4>
           </div>
 
-          <div className="text-center text-4xl font-black text-cyan-300">→</div>
+          <div
+            className="text-center text-4xl font-black"
+            style={{ color: era.theme.accent }}
+          >
+            →
+          </div>
 
-          <div className="rounded-3xl bg-cyan-300 p-6 text-black">
-            <p className="text-sm uppercase tracking-[0.25em] text-black/55">
+          <div
+            className="rounded-3xl p-6"
+            style={{
+              backgroundColor: era.theme.accent,
+              color: era.theme.bg,
+            }}
+          >
+            <p className="text-sm uppercase tracking-[0.25em] opacity-70">
               Now
             </p>
-            <h4 className="mt-3 text-3xl font-black">{featured.nowArtist}</h4>
+            <h4 className="mt-3 text-3xl font-black">{activeBridge.now}</h4>
           </div>
         </div>
 
-        <p className="mt-6 text-xl font-semibold">{featured.bridgeLine}</p>
-
-        <p className="mt-3 max-w-3xl leading-7 text-white/65">
-          {featured.reason}
+        <p className="mt-6 max-w-3xl text-xl font-semibold">
+          {activeBridge.why}
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          {featured.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/75"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
         <button
-          onClick={() => setIndex((current) => current + 1)}
-          className="mt-8 rounded-full bg-white px-6 py-3 font-bold text-black hover:bg-cyan-200"
+          onClick={onNextBridge}
+          className="mt-8 rounded-full px-6 py-3 font-bold transition hover:scale-[1.02]"
+          style={{
+            backgroundColor: era.theme.accent,
+            color: era.theme.bg,
+          }}
         >
           Reveal another match
         </button>
       </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
-        {era.thenNowBridges.map((bridge) => (
+        {era.bridges.map((bridge) => (
           <div
-            key={`${bridge.thenArtist}-${bridge.nowArtist}`}
-            className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 transition hover:-translate-y-1 hover:bg-white/[0.08]"
+            key={`${bridge.then}-${bridge.now}`}
+            className="rounded-3xl border p-6 transition hover:-translate-y-1"
+            style={{
+              backgroundColor: era.theme.bgCard,
+              borderColor: era.theme.accentBorder,
+            }}
           >
             <div className="flex items-center justify-between gap-4">
-              <h4 className="text-xl font-black">{bridge.thenArtist}</h4>
-              <span className="text-cyan-300">→</span>
-              <h4 className="text-xl font-black">{bridge.nowArtist}</h4>
+              <h4 className="text-xl font-black">{bridge.then}</h4>
+              <span style={{ color: era.theme.accent }}>→</span>
+              <h4 className="text-xl font-black">{bridge.now}</h4>
             </div>
 
-            <p className="mt-3 text-sm text-white/60">{bridge.bridgeLine}</p>
+            <p className="mt-3 text-sm" style={{ color: era.theme.textMuted }}>
+              {bridge.why}
+            </p>
           </div>
         ))}
       </div>
@@ -823,116 +505,222 @@ function ModernMatch({ era }: { era: MusicEra }) {
 
 function TheSongs({
   era,
+  visibleSongs,
   songFilter,
   setSongFilter,
-  visibleSongs,
+  genreFilter,
+  setGenreFilter,
+  genreOptions,
 }: {
-  era: MusicEra;
-  songFilter: "All" | SongGroup;
-  setSongFilter: (filter: "All" | SongGroup) => void;
-  visibleSongs: EraSong[];
+  era: (typeof DECADES)[DecadeKey];
+  visibleSongs: (typeof DECADES)[DecadeKey]["songs"];
+  songFilter: "all" | SongTier;
+  setSongFilter: (filter: "all" | SongTier) => void;
+  genreFilter: GenreBucket;
+  setGenreFilter: (genre: GenreBucket) => void;
+  genreOptions: GenreBucket[];
 }) {
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-            The Songs
-          </p>
-
-          <h3 className="mt-3 text-4xl font-black">
-            Songs that defined the {era.decade}
-          </h3>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {songFilters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setSongFilter(filter)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold ${
-                songFilter === filter
-                  ? "bg-cyan-300 text-black"
-                  : "bg-white/10 text-white/70 hover:bg-white/15"
-              }`}
+      <div className="mb-6 space-y-5">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p
+              className="text-sm font-semibold uppercase tracking-[0.3em]"
+              style={{ color: era.theme.accent }}
             >
-              {filter}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {visibleSongs.map((song) => (
-          <article
-            key={`${song.title}-${song.artist}`}
-            className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 transition hover:-translate-y-1 hover:bg-white/[0.08]"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h4 className="text-xl font-black">{song.title}</h4>
-                <p className="mt-1 text-white/65">
-                  {song.artist} · {song.year}
-                </p>
-              </div>
-
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/65">
-                {song.group}
-              </span>
-            </div>
-
-            <p className="mt-4 text-sm font-semibold text-cyan-200">
-              {song.genre}
+              The Songs
             </p>
 
-            <p className="mt-3 leading-7 text-white/65">{song.note}</p>
+            <h3 className="mt-3 text-4xl font-black">
+              Songs that defined the {era.decade}
+            </h3>
 
-            <div className="mt-5 flex flex-wrap gap-2">
-              {song.moods.map((mood) => (
-                <span
-                  key={mood}
-                  className="rounded-full bg-black/30 px-3 py-1 text-xs text-white/60"
+            <p className="mt-3 text-sm" style={{ color: era.theme.textMuted }}>
+              Showing {visibleSongs.length} songs
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {songFilters.map((filter) => {
+              const isSelected = songFilter === filter;
+
+              return (
+                <button
+                  key={filter}
+                  onClick={() => setSongFilter(filter)}
+                  className="rounded-full px-4 py-2 text-sm font-semibold transition"
+                  style={{
+                    backgroundColor: isSelected
+                      ? era.theme.accent
+                      : "rgba(255,255,255,0.1)",
+                    color: isSelected ? era.theme.bg : era.theme.text,
+                  }}
                 >
-                  {mood}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
+                  {songFilterLabels[filter]}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
+          className="rounded-3xl border p-4"
+          style={{
+            backgroundColor: era.theme.bgCard,
+            borderColor: era.theme.accentBorder,
+          }}
+        >
+          <p
+            className="mb-3 text-xs font-semibold uppercase tracking-[0.25em]"
+            style={{ color: era.theme.textMuted }}
+          >
+            Filter by genre
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {genreOptions.map((genre) => {
+              const isSelected = genreFilter === genre;
+
+              return (
+                <button
+                  key={genre}
+                  onClick={() => setGenreFilter(genre)}
+                  className="rounded-full px-4 py-2 text-xs font-semibold transition"
+                  style={{
+                    backgroundColor: isSelected
+                      ? era.theme.accent
+                      : "rgba(255,255,255,0.08)",
+                    color: isSelected ? era.theme.bg : era.theme.text,
+                    border: `1px solid ${
+                      isSelected ? era.theme.accent : era.theme.accentBorder
+                    }`,
+                  }}
+                >
+                  {genre === "all" ? "All Genres" : genre}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
+
+      {visibleSongs.length === 0 && (
+        <div
+          className="rounded-3xl border p-8 text-center"
+          style={{
+            backgroundColor: era.theme.bgCard,
+            borderColor: era.theme.accentBorder,
+          }}
+        >
+          <h4 className="text-2xl font-black">No songs found</h4>
+          <p className="mt-3" style={{ color: era.theme.textMuted }}>
+            Try changing the song type or genre filter.
+          </p>
+        </div>
+      )}
+
+      {visibleSongs.length > 0 && (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {visibleSongs.map((song) => (
+            <article
+              key={`${song.rank}-${song.title}-${song.artist}`}
+              className="rounded-3xl border p-6 transition hover:-translate-y-1"
+              style={{
+                backgroundColor: era.theme.bgCard,
+                borderColor: era.theme.accentBorder,
+              }}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h4 className="text-xl font-black">{song.title}</h4>
+                  <p className="mt-1" style={{ color: era.theme.textMuted }}>
+                    {song.artist} · {song.year}
+                  </p>
+                </div>
+
+                <span
+                  className="rounded-full px-3 py-1 text-xs font-semibold"
+                  style={{
+                    backgroundColor: era.theme.accentDim,
+                    color: era.theme.accent,
+                  }}
+                >
+                  {songFilterLabels[song.tier as SongTier]}
+                </span>
+              </div>
+
+              <p
+                className="mt-4 text-sm font-semibold"
+                style={{ color: era.theme.accent }}
+              >
+                {song.genre}
+              </p>
+
+              <p className="mt-3 leading-7">{song.why}</p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {song.mood.map((mood) => (
+                  <span
+                    key={mood}
+                    className="rounded-full px-3 py-1 text-xs"
+                    style={{
+                      backgroundColor: "rgba(0,0,0,0.25)",
+                      color: era.theme.textMuted,
+                    }}
+                  >
+                    {mood}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-function ShareEraCard({ era }: { era: MusicEra }) {
+function ShareEraCard({ era }: { era: (typeof DECADES)[DecadeKey] }) {
+  const topSongs = era.songs.slice(0, 3).map((song) => song.title);
+
   return (
-    <div className="lg:col-span-2 rounded-[2rem] border border-cyan-300/20 bg-cyan-300 p-8 text-black">
-      <p className="text-sm font-bold uppercase tracking-[0.3em] text-black/50">
+    <div
+      className="lg:col-span-2 rounded-[2rem] border p-8"
+      style={{
+        backgroundColor: era.theme.accent,
+        color: era.theme.bg,
+        borderColor: era.theme.accent,
+      }}
+    >
+      <p className="text-sm font-bold uppercase tracking-[0.3em] opacity-60">
         Shareable Era Card
       </p>
 
-      <h3 className="mt-4 text-4xl font-black">{era.shareCard.headline}</h3>
+      <h3 className="mt-4 text-4xl font-black">
+        My music era is the {era.decade}
+      </h3>
 
       <div className="mt-6 grid gap-6 md:grid-cols-3">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-black/50">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-60">
             The Sound
           </p>
-          <p className="mt-2 font-semibold">{era.shareCard.sound.join(" · ")}</p>
+          <p className="mt-2 font-semibold">{era.genres.slice(0, 5).join(" · ")}</p>
         </div>
 
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-black/50">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-60">
             The Songs
           </p>
-          <p className="mt-2 font-semibold">{era.shareCard.songs.join(" · ")}</p>
+          <p className="mt-2 font-semibold">{topSongs.join(" · ")}</p>
         </div>
 
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-black/50">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-60">
             The Vibe
           </p>
-          <p className="mt-2 font-semibold">{era.shareCard.vibe}</p>
+          <p className="mt-2 font-semibold">{era.tagline}</p>
         </div>
       </div>
     </div>

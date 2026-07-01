@@ -121,7 +121,7 @@ export default function Home() {
         <h1 className="mt-8 max-w-5xl text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
           Building AI-enabled tools for{" "}
           <span className="bg-gradient-to-r from-blue-500 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
-            strategic sourcing decisions.
+            strategic decision making.
           </span>
         </h1>
 
