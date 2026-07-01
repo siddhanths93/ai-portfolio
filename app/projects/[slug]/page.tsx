@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import MusicEraTimeMachine from "@/components/MusicEraTimeMachine";
+
+// {<div className="fixed top-20 left-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg">
+//     TEST: World Cup deploy check
+// </div>}
 
 const projects = {
   "supplier-performance-spend-intelligence": {
@@ -63,7 +68,7 @@ const projects = {
     talkTrack:
       "This project shows how supplier risk factors can be translated into a structured scoring model and a simple decision-support interface.",
   },
-  "supplier-normalization-workbench": {
+"supplier-normalization-workbench": {
   title: "Supplier Normalization Workbench",
   eyebrow: "Procurement Data Quality · Fuzzy Matching",
   description:
@@ -141,7 +146,31 @@ const projects = {
   demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
   githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
 },
-"reddit-pulse-lab": {
+ "music-era-time-machine": {
+    title: "Music Era Time Machine",
+    eyebrow: "Interactive Music Experience · React · Next.js",
+    description:
+      "A nostalgia-driven music discovery app where users explore the sound of each decade and find their modern music match.",
+    problem:
+      "Most music-history experiences either feel like static lists or overly technical data projects. I wanted to build something more emotional and mass-audience friendly: a decade-based music museum that combines nostalgia, cultural context, and modern discovery.",
+    solution:
+      "I built an interactive React experience that lets users enter a decade, explore the songs and cultural moments that defined it, and use a Then → Now bridge to connect classic artists with modern equivalents.",
+    features: [
+      "Decade-based music era selector",
+      "Three-mode experience: Enter the Era, Modern Match, and The Songs",
+      "Curated song museum with Start Here, Shaped the Sound, and Curator Picks",
+      "Then → Now modern artist matching",
+      "Cultural moment cards",
+      "Defining album spotlight",
+      "Shareable era card concept",
+      "Static curated dataset with no API dependency",
+    ],
+    demonstrates:
+      "This project demonstrates product thinking, interactive UX design, content curation, React state management, and the ability to turn a dataset into a consumer-friendly experience rather than a traditional dashboard.",
+    tags: ["Next.js", "React", "Tailwind", "Music Curation", "Interactive UX"],
+    // embeddedDemo: true,
+  },
+  "reddit-pulse-lab": {
   title: "Reddit Pulse Lab",
   eyebrow: "Reddit API · NLP · Discussion Intelligence",
   description:
@@ -203,10 +232,29 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = await params;
-  const project = projects[resolvedParams.slug as ProjectSlug];
+  const slug = resolvedParams.slug;
+  const project = projects[slug as ProjectSlug];
 
   if (!project) {
     notFound();
+  }
+
+  const isMusicEra = slug === "music-era-time-machine";
+
+  if (isMusicEra) {
+    return (
+      <main className="min-h-screen bg-slate-950 text-white">
+        <Navbar />
+
+        <div className="mx-auto max-w-6xl px-6 py-28">
+          <Link href="/" className="text-sm text-cyan-300 hover:text-cyan-200">
+            ← Back to Home
+          </Link>
+
+          <MusicEraTimeMachine />
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -244,7 +292,7 @@ export default async function ProjectPage({
             )}
           </div>
 
-<div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             {project.tags.map((tag) => (
               <span
                 key={tag}
@@ -289,11 +337,6 @@ export default async function ProjectPage({
             {project.demonstrates}
           </p>
         </section>
-
-        {/*<section className="mt-12 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-7">*/}
-        {/*  <h2 className="text-2xl font-semibold">Interview Talk Track</h2>*/}
-        {/*  <p className="mt-4 leading-8 text-slate-200">{project.talkTrack}</p>*/}
-        {/*</section>*/}
       </div>
     </main>
   );

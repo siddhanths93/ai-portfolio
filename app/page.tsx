@@ -3,10 +3,6 @@ import Navbar from "@/components/Navbar";
 
 const SUPPLIER_SPEND_APP_URL = "https://supplier-performance-briefing-5k3n38kxgqwe3g7n7q3tbf.streamlit.app/";
 
-{/* <div className="fixed top-20 left-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg">
-  TEST: World Cup deploy check
-</div> */}
-
 
 const focusAreas = [
   {
@@ -81,15 +77,23 @@ const projects = [
   tags: ["Streamlit", "Python", "Sports Analytics", "GitHub Actions"],
   // demoUrl: "https://sid-world-cup-drama-lab.streamlit.app/",
   // githubUrl: "https://github.com/siddhanths93/world-cup-drama-lab",
-},
-{
-  title: "Reddit Pulse Lab",
-  slug: "reddit-pulse-lab",
-  description: "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, and similar-thread recommendations.",
-  tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+  },
+  {
+  title: "Music Era Time Machine",
+  slug: "music-era-time-machine",
+  description:
+    "A nostalgia-driven music discovery app where users explore the sound of each decade and find their modern music match through curated Then → Now artist bridges.",
+  tags: ["Next.js", "React", "Music Curation", "Interactive UX"],
   featured: false,
-},
-{
+  },
+  {
+    title: "Reddit Pulse Lab",
+    slug: "reddit-pulse-lab",
+    description: "A Reddit discussion-intelligence app that turns subreddit posts into pain-point themes, keyword signals, and similar-thread recommendations.",
+    tags: ["Python", "Streamlit", "Reddit API", "NLP", "Cosine Similarity"],
+    featured: false,
+  },
+  {
     title: "10-K Insight Agent",
     slug: "ten-k-insight-agent",
     description:
